@@ -3,92 +3,37 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6 text-left mb-4 mt-4">
-                <h2>Specials & Latest Movies</h2>
+                <h2>Son Eklenen Dersler</h2>
             </div>
 
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="slide-slider-full owl-carousel owl-theme">
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s5.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Made in haven <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s6.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Gravity <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s7.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Inspector <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s8.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Sky Staar <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s1.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Inspector <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s2.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Sky Staar <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
+                    <?php
+                    $videosor = $db->prepare("SELECT * FROM video_tbl WHERE isActive = 1 ORDER BY video_tarih DESC");
+                    $videosor->execute(array(0));
+                    $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($videocek as $rows) { ?>
+                        <div class="owl-items">
+                            <form action="islem.php" method="POST">
+                                <input type="hidden" name="video_id" value="<?=$rows['id']?>">
+                                <input type="hidden" name="uye_id" value="<?=$kullanicicek['id']?>">
+                                <button class="btn btn-outline-dark rounded-0 my-2" name="dahasonraizle"> <i class="fa fa-clock"></i> Daha Sonra İzle</button>
+                            </form>
+                            <a class="slide-one" href="">
+                                <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image"></div>
+                                <div class="slide-content">
+                                    <h2>
+                                        <?= $rows['video_baslik'] ?>
+                                        <img src="images/plus.png" alt="icon">
+                                    </h2>
+                                    <p><?= kisalt($rows['video_aciklama'], 200) ?></p>
+                                    <span class="tag"><?= $rows['video_tarih'] ?></span>
+                                </div>
+                            </a>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -100,7 +45,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6 text-left mb-4 mt-4">
-                <h2>Specials & Latest Movies</h2>
+                <h2>Daha Sonra İzlemek İstediklerim</h2>
             </div>
 
         </div>
@@ -120,72 +65,6 @@
                             </div>
                         </a>
                     </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s10.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Defective Area <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s11.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Law of Order <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s12.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Ravata of Sky <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s3.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Inspector <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s4.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Sky Staar <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -193,103 +72,12 @@
 </div>
 <!-- slider wrapper -->
 
-<!-- slider wrapper -->
-<div class="slide-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6 text-left mb-4 mt-4">
-                <h2>Specials & Latest Movies</h2>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="slide-slider-full owl-carousel owl-theme">
-                    <div class="owl-items">
-                        <a class="slide-one slide-two" href="#">
-                            <div class="slide-image" style="background-image: url(images/s17.png);"></div>
-                            <div class="slide-content">
-                                <h2>Batman Knight <img src="images/plus.png" alt="icon"></h2>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one slide-two" href="#">
-                            <div class="slide-image" style="background-image: url(images/s18.jpg);"></div>
-                            <div class="slide-content">
-                                <h2>Gimini Man <img src="images/plus.png" alt="icon"></h2>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one slide-two" href="#">
-                            <div class="slide-image" style="background-image: url(images/s19.jpg);"></div>
-                            <div class="slide-content">
-                                <h2>Create of Shadow <img src="images/plus.png" alt="icon"></h2>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one slide-two" href="#">
-                            <div class="slide-image" style="background-image: url(images/s20.jpg);"></div>
-                            <div class="slide-content">
-                                <h2>Jusy Cry yourself <img src="images/plus.png" alt="icon"></h2>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="owl-items">
-                        <a class="slide-one slide-two" href="#">
-                            <div class="slide-image" style="background-image: url(images/s7.jpg);"></div>
-                            <div class="slide-content">
-                                <h2>Create of Shadow <img src="images/plus.png" alt="icon"></h2>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one slide-two" href="#">
-                            <div class="slide-image" style="background-image: url(images/s8.jpg);"></div>
-                            <div class="slide-content">
-                                <h2>Jusy Cry yourself <img src="images/plus.png" alt="icon"></h2>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- slider wrapper -->
 <!-- slider wrapper -->
 <div class="category-wrapper slide-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6 text-left mb-4 mt-4">
-                <h2>Watch in Your Language</h2>
+                <h2>Kategoriler</h2>
             </div>
 
         </div>
@@ -324,99 +112,3 @@
     </div>
 </div>
 <!-- slider wrapper -->
-<!-- slider wrapper -->
-<div class="slide-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6 text-left mb-4 mt-4">
-                <h2>Specials & Latest Movies</h2>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="slide-slider-full owl-carousel owl-theme">
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s13.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Second Man of Earth <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s14.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Defective Area <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s15.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Law of Order <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s16.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Ravata of Sky <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s5.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Law of Order <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="owl-items">
-                        <a class="slide-one" href="season.html">
-                            <div class="slide-image"><img src="images/s6.jpg" alt="image"></div>
-                            <div class="slide-content">
-                                <h2>Ravata of Sky <img src="images/plus.png" alt="icon"></h2>
-                                <p>Radhe is a singing prodigy determined to follow in the classical footsteps of his grandfather.</p>
-                                <span class="tag">2 h 20 min</span>
-                                <span class="tag">2020</span>
-                                <span class="tag"><b>HD</b></span>
-                                <span class="tag"><b>16+</b></span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

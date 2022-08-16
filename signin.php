@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vstream - Media Landing Page</title>
+    <title>Giriş Yap</title>
 
     <link rel="stylesheet" href="css/themify-icons.css">
     <!-- Favicon icon -->
@@ -17,8 +17,6 @@
 <body>
 
     <div class="preloader"></div>
-
-    <div class="backdrop"></div>
 
     <div class="main-wrapper">
         <!-- header wrapper -->
@@ -38,22 +36,15 @@
                 <div class="row justify-content-center">
                     <div class="col-sm-5">
                         <div class="form-div text-center">
-                            <h2>Login</h2>
-                            <p>Enter your account details below</p>
-                            <form action="#">
+                            <h2>Giriş Yap</h2>
+                            <form action="islem.php" method="POST">
                                 <div class="form-group mt-5">
-                                  <input class="form-control" type="email" placeholder="Email address">
-                                  <input class="form-control" type="password" placeholder="Password">
-                                </div>
-                                <div class="form-group form-check-label">
-                                  <label for="tarms-check">
-                                    <input class="d-none" type="checkbox" id="tarms-check" checked=""><span class="checkbox"></span>
-                                    <p>Keep me signed in </p>
-                                  </label>
+                                  <input class="form-control" type="email" placeholder="Email" name="kullanici_ad">
+                                  <input class="form-control" type="password" placeholder="Şifre" name="kullanici_sifre">
                                 </div>
                                 <div class="form-group button-block text-center">
-                                  <button class="form-btn">Get Started</button>
-                                  <p class="sign-up-text">Already have an account?<a href="#">Sign in</a></p>
+                                  <button class="form-btn" name="login">Giriş Yap</button>
+                                  <p class="sign-up-text">Hesabın Yok Mu? <a href="signup.php">Kayıt Ol</a></p>
                                 </div>
                                 
                             </form>
@@ -62,7 +53,15 @@
                 </div>
             </div>
         </section>
+
+
+         
+
     </div>
+
+    
+
+
     <script src="js/plugin.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="js/scripts.js"></script>

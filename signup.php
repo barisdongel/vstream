@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vstream - Media Landing Page</title>
+    <title>Kayıt Ol</title>
 
     <link rel="stylesheet" href="css/themify-icons.css">
     <!-- Favicon icon -->
@@ -16,7 +16,6 @@
 <body>
 
     <div class="preloader"></div>
-    <div class="backdrop"></div>
 
     <div class="main-wrapper">
         <!-- header wrapper -->
@@ -36,23 +35,16 @@
                 <div class="row justify-content-center">
                     <div class="col-sm-5">
                         <div class="form-div text-center">
-                            <h2>Register</h2>
-                            <p>No credit card required</p>
-                            <form action="#">
+                            <h2>Kayıt Ol</h2>
+                            <form action="islem.php" method="POST">
                                 <div class="form-group mt-5">
-                                  <input class="form-control" type="email" placeholder="Email address">
-                                  <input class="form-control" type="text" placeholder="Company name">
-                                  <input class="form-control" type="password" placeholder="Password">
-                                </div>
-                                <div class="form-group form-check-label">
-                                  <label for="tarms-check">
-                                    <input class="d-none" type="checkbox" id="tarms-check" checked=""><span class="checkbox"></span>
-                                    <p>I agree to the <a href="term.html"> Terms &amp; Condition </a></p>
-                                  </label>
+                                  <input class="form-control" type="email" placeholder="Email" name="kullanici_mail">
+                                  <input class="form-control" type="text" placeholder="Adınız" name="kullanici_ad">
+                                  <input class="form-control" type="text" placeholder="Telefon Numaranız" name="kullanici_telefon">
                                 </div>
                                 <div class="form-group button-block text-center">
-                                  <button class="form-btn">Get Started</button>
-                                  <p class="sign-up-text">Already have an account?<a href="#">Sign in</a></p>
+                                  <button class="form-btn" name="kayitol">Kayıt Talebi Oluştur</button>
+                                  <p class="sign-up-text">Zaten Hesabın Var Mı ?<a href="signin.php"> Giriş Yap</a></p>
                                 </div>
                                 
                             </form>
