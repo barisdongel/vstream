@@ -547,26 +547,48 @@ if ($_GET['kullanicisil'] == "ok") {
 //Daha sonra izle listesi
 if (isset($_POST['dahasonraizle'])) {
 
-	$listekaydet = $db->prepare("INSERT INTO list_tbl SET
-		video_id=:video,
-		uye_id=:uye,
-		tarih=:tarih
-		");
-	$insert = $listekaydet->execute(array(
-		'video' => $_POST['video_id'],
+	$listesor = $db->prepare("SELECT * FROM list_tbl where uye_id=:uye and video_id=:video");
+	$listesor->execute(array(
 		'uye' => $_POST['uye_id'],
-		'tarih' => date('Y-m-d H:i:s')
+		'video' => $_POST['video_id']
 	));
 
-	if ($insert) {
+	echo $say = $listesor->rowCount();
+
+	if ($say > 0) {
+		$sil = $db->prepare("DELETE FROM list_tbl WHERE uye_id=:uye AND video_id=:video");
+		$kontrol = $sil->execute(array(
+			'uye' => $_POST['uye_id'],
+			'video' => $_POST['video_id']
+		));
+
 		echo "<script>
         alert('İşlem başarılı.');
         window.location.href='index.php';
         </script>";
 	} else {
-		echo "<script>
+
+		$listekaydet = $db->prepare("INSERT INTO list_tbl SET
+		video_id=:video,
+		uye_id=:uye,
+		tarih=:tarih
+		");
+		$insert = $listekaydet->execute(array(
+			'video' => $_POST['video_id'],
+			'uye' => $_POST['uye_id'],
+			'tarih' => date('Y-m-d H:i:s')
+		));
+
+		if ($insert) {
+			echo "<script>
+        alert('İşlem başarılı.');
+        window.location.href='index.php';
+        </script>";
+		} else {
+			echo "<script>
         alert('İşlem başarısız.');
         window.location.href='index.php';
         </script>";
+		}
 	}
 }

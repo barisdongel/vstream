@@ -20,7 +20,7 @@ $ayarsor->execute(array(0));
 $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
 //ayarlar son
 
-$kategorisor = $db->prepare("SELECT * FROM kategori_tbl");
+$kategorisor = $db->prepare("SELECT * FROM kategori_tbl LIMIT 6");
 $kategorisor->execute();
 $kategoricek = $kategorisor->fetchAll(PDO::FETCH_ASSOC);
 
