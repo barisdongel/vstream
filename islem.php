@@ -300,7 +300,7 @@ if ($_GET['kategorisil'] == 'ok') {
 	}
 }
 
-/*Admin Girii*/
+/*Admin Girişi*/
 if (isset($_POST['adminlogin'])) {
 
 	$kullanici_ad = $_POST['kullanici_ad'];
@@ -328,30 +328,37 @@ if (isset($_POST['adminlogin'])) {
 	}
 }
 
-/*Kullanici Girii*/
+/*Kullanici Girişi*/
 if (isset($_POST['login'])) {
 
 	$kullanici_ad = $_POST['kullanici_ad'];
 	$kullanici_sifre = $_POST['kullanici_sifre'];
 
-	if ($kullanici_ad && $kullanici_sifre) {
+	if (!filter_var($kullanici_ad, FILTER_VALIDATE_EMAIL)) {
+		echo "<script>
+		alert('Geçerli bir e-posta adresi girin.');
+		window.location.href='signin.php';
+		</script>";
+	} else {
+		if ($kullanici_ad && $kullanici_sifre) {
 
-		$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad and kullanici_sifre=:sifre");
-		$kullanicisor->execute(array(
-			'ad' => $kullanici_ad,
-			'sifre' => $kullanici_sifre
-		));
+			$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad and kullanici_sifre=:sifre");
+			$kullanicisor->execute(array(
+				'ad' => $kullanici_ad,
+				'sifre' => $kullanici_sifre
+			));
 
-		echo $say = $kullanicisor->rowCount();
+			echo $say = $kullanicisor->rowCount();
 
-		if ($say > 0) {
-			$_SESSION['kullanici_ad'] = $kullanici_ad;
-			header('Location:index.php');
-		} else {
-			echo "<script>
+			if ($say > 0) {
+				$_SESSION['kullanici_ad'] = $kullanici_ad;
+				header('Location:index.php');
+			} else {
+				echo "<script>
 			alert('Giriş başarısız.');
 			window.location.href='signin.php';
 			</script>";
+			}
 		}
 	}
 }
