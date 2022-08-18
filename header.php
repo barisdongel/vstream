@@ -4,9 +4,11 @@ session_start();
 include 'baglan.php';
 include 'function.php';
 
-$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl WHERE kullanici_ad=:ad");
+$kullanici_ad = $_SESSION['kullanici_ad'];
+$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad AND kullanici_id=:id");
 $kullanicisor->execute(array(
-    'ad' => $_SESSION['kullanici_ad']
+  'ad' => $kullanici_ad,
+  'id' => $_SESSION['kullanici_id']
 ));
 $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
@@ -85,7 +87,7 @@ if (isset($_POST['aranan'])) {
                     <div class="col-lg-4">
 
                         <div class="user-avater">
-                            <img src="images/user-8.png" alt="user">
+                            <img src="<?=$kullanicicek['kullanici_foto']?>" alt="user">
                             <div class="user-menu">
                                 <ul>
                                     <li><a href="profile.php"><i class="fa-solid fa-user"></i> Profilim</a></li>

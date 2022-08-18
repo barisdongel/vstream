@@ -24,7 +24,7 @@ $calisansor->execute();
 			<div class="profile-widget-header">
 				<div class="row">
 					<div class="col-12">
-						<img alt="image" src="<?=$kullanicicek['kullanici_foto'] ?>"
+						<img alt="image" src="../<?=$kullanicicek['kullanici_foto'] ?>"
 							class="rounded-circle profile-widget-picture box-center">
 					</div>
 				</div>
@@ -81,7 +81,7 @@ $calisansor->execute();
 						<?php
 						while ($kullanicitut=$kullaniciara->fetch(PDO::FETCH_ASSOC)) { ?>
 						<tr>
-							<td><img src="<?=$kullanicitut['kullanici_foto'] ?>" class="w-100"></td>
+							<td><img src="../<?=$kullanicitut['kullanici_foto'] ?>" class="w-100"></td>
 							<td class="w-50"><?=$kullanicitut['kullanici_adsoyad'] ?></td>
 							<td class="w-50"><?=$kullanicitut['kullanici_tel'] ?></td>
 							<td><?=$kullanicitut['kullanici_ad'] ?></td>

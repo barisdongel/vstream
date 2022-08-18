@@ -17,7 +17,7 @@ $kullanicicek=$kullanicisor->fetch(PDO::FETCH_ASSOC);
 
 				<div class="card-body">
 					<div class="form-group">
-						<img style="width: 20%;" src="<?=$kullanicicek['kullanici_foto'] ?>">
+						<img style="width: 20%;" src="../<?=$kullanicicek['kullanici_foto'] ?>">
 						<div class="form-group">
 		          <label><i class="fa fa-image text-primary"></i> Çalışan Resim</label>
 		          <input style="height: 50px;" type="file" name="kullanici_foto" class="form-control">

@@ -4,28 +4,30 @@ session_start();
 include '../baglan.php';
 include 'function.php';
 
-$ayarsor =$db->prepare("SELECT * FROM ayar_tbl WHERE ayar_id=?");
+$ayarsor = $db->prepare("SELECT * FROM ayar_tbl WHERE ayar_id=?");
 $ayarsor->execute(array(0));
-$ayarcek=$ayarsor->fetch(PDO::FETCH_ASSOC);
+$ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
 
-$kullanicisor =$db->prepare("SELECT * FROM kullanici_tbl WHERE kullanici_ad=:ad");
+$kullanici_ad = $_SESSION['kullanici_ad'];
+$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad AND kullanici_id=:id AND kullanici_yetki=0");
 $kullanicisor->execute(array(
-  'ad' => $_SESSION['kullanici_ad']
+  'ad' => $kullanici_ad,
+  'id' => $_SESSION['kullanici_id']
 ));
-$kullanicicek=$kullanicisor->fetch(PDO::FETCH_ASSOC);
+$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
 if (!isset($_SESSION['kullanici_ad'])) {
 
   header('location:login.php');
-
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title><?=$ayarcek['ayar_title'] ?></title>
+  <title><?= $ayarcek['ayar_title'] ?></title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/css/app.min.css">
   <!-- Template CSS -->
@@ -50,22 +52,20 @@ if (!isset($_SESSION['kullanici_ad'])) {
       <nav class="navbar navbar-expand-lg main-navbar">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"><i
-              class="fas fa-bars"></i></a></li>
-              <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"><i class="fas fa-bars"></i></a></li>
+            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
                 <i class="fas fa-expand"></i>
               </a>
             </li>
-            <li><a class="nav-link nav-link-lg" href="<?=$ayarcek['ayar_siteurl']?>" target="_blank"><i class="fas fa-external-link-alt"></i> Siteye Git</a> </li>
+            <li><a class="nav-link nav-link-lg" href="<?= $ayarcek['ayar_siteurl'] ?>" target="_blank"><i class="fas fa-external-link-alt"></i> Siteye Git</a> </li>
           </ul>
         </div>
         <ul class="navbar-nav navbar-right">
-          <li class="dropdown"><a href="#" data-toggle="dropdown"
-            class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="<?=$kullanicicek['kullanici_foto'] ?>" class="user-img-radious-style">
-            <span class="d-sm-none d-lg-inline-block"></span></a>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+              <img alt="image" src="../<?= $kullanicicek['kullanici_foto'] ?>" class="user-img-radious-style">
+              <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right">
-              <div class="dropdown-title">Hoşgeldin <?=$_SESSION['kullanici_ad'] ?></div>
+              <div class="dropdown-title">Hoşgeldin <?= $_SESSION['kullanici_ad'] ?></div>
               <a href="kullanici-profil.php" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profil
               </a>

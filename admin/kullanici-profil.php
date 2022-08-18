@@ -16,7 +16,7 @@
       <div class="row mt-sm-4 background-image-body">
         <div class="col-md-12 col-lg-12 box-center">
           <div class="row author-box">
-            <img alt="image" src="<?php echo $kullanicicek['kullanici_foto'] ?>" class="rounded-circle author-box-picture box-center mt-4">
+            <img alt="image" src="../<?php echo $kullanicicek['kullanici_foto'] ?>" class="rounded-circle author-box-picture box-center mt-4">
           </div>
           <div class="row author-box">
             <div class="page-inner box-center align-center">

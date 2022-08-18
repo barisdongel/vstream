@@ -7,6 +7,86 @@ include 'baglan.php';
 GÜNCELLEME İŞLEMLERİ
 */
 
+//Profil Güncelleme işlemi
+if (isset($_POST['profilguncelle'])) {
+	$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl");
+	$kullanicisor->execute(array(0));
+	$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+
+	if ($_FILES['kullanici_foto']['size'] != 0) {
+		$uploads_dir = 'images/users/';
+		@$tmp_name = $_FILES['kullanici_foto']["tmp_name"];
+		@$name = $_FILES['kullanici_foto']["name"];
+		$random = rand(1000, 9999);
+		$refimgyol = $uploads_dir . $random . $name;
+		@move_uploaded_file($tmp_name, "$uploads_dir/$random$name");
+	} else {
+		$refimgyol = $kullanicicek['kullanici_foto'];
+	}
+
+	$kullanicikaydet = $db->prepare("UPDATE kullanici_tbl SET
+		kullanici_foto=:foto,
+		kullanici_mail=:mail,
+		kullanici_ad=:ad,
+		kullanici_hakkinda=:hakkinda,
+		kullanici_tel=:tel,
+		kullanici_adsoyad=:adsoyad
+		WHERE kullanici_id=:id
+		");
+	$update = $kullanicikaydet->execute(array(
+		'id' => $_POST['kullanici_id'],
+		'mail' => $_POST['kullanici_mail'],
+		'ad' => $_POST['kullanici_ad'],
+		'hakkinda' => $_POST['kullanici_hakkinda'],
+		'tel' => $_POST['kullanici_tel'],
+		'adsoyad' => $_POST['kullanici_adsoyad'],
+		'foto' => $refimgyol
+	));
+
+	if ($update) {
+		echo "<script>
+			alert('Profiliniz güncellendi.');
+			window.location.href='profile.php';
+			</script>";
+	} else {
+		echo "<script>
+			alert('Bir sorun oluştu.');
+			window.location.href='profile.php';
+			</script>";
+	}
+}
+
+//Şifre Güncelleme işlemi
+if (isset($_POST['sifreguncelle'])) {
+	if (md5($_POST['kullanici_sifre']) != md5($_POST['kullanici_sifre2'])) {
+		echo "<script>
+			alert('Şifreler uyuşmuyor.');
+			window.location.href='profile.php';
+			</script>";
+	} else {
+		$kullanicikaydet = $db->prepare("UPDATE kullanici_tbl SET
+		kullanici_sifre=:sifre
+		WHERE kullanici_id=:id
+		");
+		$update = $kullanicikaydet->execute(array(
+			'id' => $_POST['kullanici_id'],
+			'sifre' => md5($_POST['kullanici_sifre'])
+		));
+
+		if ($update) {
+			echo "<script>
+			alert('Şifreniz değiştirildi.');
+			window.location.href='profile.php';
+			</script>";
+		} else {
+			echo "<script>
+			alert('Bir sorun oluştu.');
+			window.location.href='profile.php';
+			</script>";
+		}
+	}
+}
+
 //Genel Ayarlar Güncelleme şlemi
 if (isset($_POST['ayarguncelle'])) {
 
@@ -304,20 +384,21 @@ if ($_GET['kategorisil'] == 'ok') {
 if (isset($_POST['adminlogin'])) {
 
 	$kullanici_ad = $_POST['kullanici_ad'];
-	$kullanici_sifre = $_POST['kullanici_sifre'];
+	$kullanici_sifre = md5($_POST['kullanici_sifre']);
 
 	if ($kullanici_ad && $kullanici_sifre) {
 
-		$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad and kullanici_sifre=:sifre");
+		$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad and kullanici_sifre=:sifre and kullanici_yetki=0");
 		$kullanicisor->execute(array(
 			'ad' => $kullanici_ad,
 			'sifre' => $kullanici_sifre
 		));
-
 		echo $say = $kullanicisor->rowCount();
+		$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
 		if ($say > 0) {
 			$_SESSION['kullanici_ad'] = $kullanici_ad;
+			$_SESSION['kullanici_id'] = $kullanicicek['kullanici_id'];
 			header('Location:admin/index.php');
 		} else {
 			echo "<script>
@@ -332,7 +413,7 @@ if (isset($_POST['adminlogin'])) {
 if (isset($_POST['login'])) {
 
 	$kullanici_ad = $_POST['kullanici_ad'];
-	$kullanici_sifre = $_POST['kullanici_sifre'];
+	$kullanici_sifre = md5($_POST['kullanici_sifre']);
 
 	if (!filter_var($kullanici_ad, FILTER_VALIDATE_EMAIL)) {
 		echo "<script>
@@ -347,11 +428,12 @@ if (isset($_POST['login'])) {
 				'ad' => $kullanici_ad,
 				'sifre' => $kullanici_sifre
 			));
-
 			echo $say = $kullanicisor->rowCount();
+			$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
 			if ($say > 0) {
 				$_SESSION['kullanici_ad'] = $kullanici_ad;
+				$_SESSION['kullanici_id'] = $kullanicicek['kullanici_id'];
 				header('Location:index.php');
 			} else {
 				echo "<script>
