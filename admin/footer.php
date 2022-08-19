@@ -23,10 +23,13 @@
 <script src="assets/bundles/jquery.sparkline.min.js"></script>
 <!-- dropzone js -->
 <script src="assets/dropzone/dist/dropzone.js"></script>
+<!-- General JS Scripts -->
+<script src="assets/js/dropify.min.js"></script>
 <!--CK Editor-->
 <script src="../ckeditor/ckeditor.js"></script>
 <script>
   CKEDITOR.replace('ckeditor1');
+  $('.dropify').dropify();
 </script>
 </body>
 

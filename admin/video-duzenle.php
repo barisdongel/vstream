@@ -15,9 +15,8 @@ $videocek = $videosor->fetch(PDO::FETCH_ASSOC);
 				<input type="hidden" name="id" value="<?=$videocek['id']?>">
 				<div class="card-body">
 					<div class="form-group">
-						<img src="../<?= $videocek['video_kapak'] ?>" alt="kapak" width="300"><br>
 						<label><i class="fa fa-image"></i> Video Kapak Fotoğrafı</label>
-						<input style="height: 50px;" type="file" name="video_kapak" class="form-control">
+						<input type="file" class="dropify" data-default-file="<?=$videocek['video_kapak']?>" name="video_kapak" />
 					</div>
 					<div class="row">
 						<div class="form-group col-md-6">

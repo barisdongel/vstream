@@ -11,7 +11,7 @@
         <div class="card-body">
           <div class="form-group">
             <label><i class="fa fa-image"></i> Video Kapak Fotoğrafı</label>
-            <input style="height: 50px;" type="file" name="video_kapak" class="form-control">
+            <input type="file" class="dropify" name="video_kapak" />
           </div>
           <div class="row">
             <div class="form-group col-md-6">
@@ -70,7 +70,7 @@
         </div>
     </div>
     <div class="col-md-12 text-right">
-      <a class="btn btn-warning" href="videolar.php"><i class="fa fa-long-arrow-alt-left"></i> Geri Dön</a>
+      <a class="btn btn-warning" href="video.php"><i class="fa fa-long-arrow-alt-left"></i> Geri Dön</a>
       <button class="btn btn-info" type="submit" name="videoekle">Ekle</button>
     </div>
     </form>

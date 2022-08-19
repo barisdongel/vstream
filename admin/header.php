@@ -42,6 +42,8 @@ if (!isset($_SESSION['kullanici_ad'])) {
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
   <!-- Custom style CSS -->
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
+  <!--dropify-->
+  <link rel="stylesheet" href="assets/css/dropify.min.css">
 </head>
 
 <body>

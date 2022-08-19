@@ -79,7 +79,7 @@ if (isset($_POST['aranan'])) {
                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav nav-menu float-none text-center">
                                 <?php foreach ($kategoricek as $row) { ?>
-                                    <li class="nav-item"><a class="nav-link" href="#"><?= $row['kategori_ad'] ?></a></li>
+                                    <li class="nav-item"><a class="nav-link" href="categories.php?kategori_id=<?=$row['kategori_id']?>"><?= $row['kategori_ad'] ?></a></li>
                                 <?php } ?>
                             </ul>
                         </div>
@@ -97,7 +97,7 @@ if (isset($_POST['aranan'])) {
                             </div>
                         </div>
                         <div class="search-div">
-                            <form action="" method="POST">
+                            <form action="islem.php" method="POST">
                                 <input type="text" placeholder="Ara..." name="aranan">
                             </form>
                         </div>

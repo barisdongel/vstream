@@ -119,7 +119,7 @@
                     foreach ($kategoricek as $row) {
                     ?>
                         <div class="owl-items">
-                            <a href="#" class="category-wrap" style="background-image: url(images/gb<?= $i ?>.png);"><span><?= $row['kategori_ad'] ?></span></a>
+                            <a href="categories.php?kategori_id=<?=$row['kategori_id']?>" class="category-wrap" style="background-image: url(images/gb<?= $i ?>.png);"><span><?= $row['kategori_ad'] ?></span></a>
                         </div>
                     <?php
                         if ($i >= 4) {

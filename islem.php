@@ -653,7 +653,7 @@ if (isset($_POST['dahasonraizle'])) {
 
 		echo "<script>
         alert('İşlem başarılı.');
-        window.location.href='index.php';
+        javascript:history.go(-1)
         </script>";
 	} else {
 
@@ -671,12 +671,12 @@ if (isset($_POST['dahasonraizle'])) {
 		if ($insert) {
 			echo "<script>
         alert('İşlem başarılı.');
-        window.location.href='index.php';
+		javascript:history.go(-1)
         </script>";
 		} else {
 			echo "<script>
         alert('İşlem başarısız.');
-        window.location.href='index.php';
+        javascript:history.go(-1)
         </script>";
 		}
 	}
