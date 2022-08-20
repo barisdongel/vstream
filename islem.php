@@ -463,7 +463,7 @@ if (isset($_POST['kayitol'])) {
 			'ad' => $_POST['kullanici_ad'],
 			'mail' => $_POST['kullanici_mail'],
 			'telefon' => $_POST['kullanici_telefon'],
-			'zaman' => $_POST['tarih']
+			'zaman' => date('Y-m-d H:i:s')
 		));
 
 		if ($insert) {
@@ -532,7 +532,7 @@ if (isset($_POST['kullaniciekle'])) {
 		");
 	$insert = $urunkaydet->execute(array(
 		'ad' => $_POST['kullanici_ad'],
-		'sifre' => $_POST['kullanici_sifre'],
+		'sifre' => md5($_POST['kullanici_sifre']),
 		'zaman' => $_POST['kullanici_zaman'],
 		'hakkinda' => $_POST['kullanici_hakkinda'],
 		'dogumyeri' => $_POST['kullanici_dogumyeri'],

@@ -18,6 +18,7 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="js/scripts.js"></script>
 <script src="js/video-player.js"></script>
+<script src="vendor/sweetalert/sweetalert.min.js"></script>
 
 </body>
 

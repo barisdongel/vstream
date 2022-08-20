@@ -16,7 +16,7 @@ $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
                                     <h2><?= $row['video_baslik'] ?></h2>
                                     <span class="tag"><?= $row['video_tarih'] ?></span>
                                     <p><?= kisalt($row['video_aciklama'], 200) ?></p>
-                                    <a href="#" class="btn btn-lg"><img src="images/play.png" alt="icn">Oynat</a>
+                                    <a href="season.php?id=<?=$row['id']?>" class="btn btn-lg"><img src="images/play.png" alt="icn">Oynat</a>
                                 </div>
                                 <div class="right-wrap" style="background-image: url(<?= $row['video_kapak'] ?>);"></div>
                             </div>
