@@ -47,10 +47,10 @@ $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
     <!--Owl Carousel-->
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <!--video player css-->
-    <link rel="stylesheet" href="css/video-player.css">
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
+    <!--dropify css-->
+    <link rel="stylesheet" href="admin/assets/css/dropify.min.css">
     <!--fontawesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>

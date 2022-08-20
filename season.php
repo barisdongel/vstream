@@ -27,7 +27,7 @@ $videolar = $sonvideolar->fetchAll(PDO::FETCH_ASSOC);
                         <h2><?= $videocek['video_baslik'] ?></h2>
                         <span class="tag"><?= $kategoricek['kategori_ad'] ?></span>
                         <p><?= $videocek['video_aciklama'] ?></p>
-                        <a href="video.html" class="btn btn-lg"><img src="images/play.png" alt="icn">Şimdi İzle</a>
+                        <a href="video.php?id=<?=$videocek['id']?>" class="btn btn-lg"><img src="images/play.png" alt="icn">Şimdi İzle</a>
                         <a href="#" class="icon-bttn"><i class="ti-plus text-white"></i></a>
                     </div>
                     <div class="right-wrap">
@@ -56,7 +56,7 @@ $videolar = $sonvideolar->fetchAll(PDO::FETCH_ASSOC);
                 <div class="slide-slider-full owl-carousel owl-theme">
                     <?php foreach ($videolar as $rows) { ?>
                         <div class="owl-items">
-                            <a class="slide-one" href="">
+                            <a class="slide-one" href="season.php?id=<?=$rows['id']?>">
                                 <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image"></div>
                                 <div class="slide-content">
                                     <h2>

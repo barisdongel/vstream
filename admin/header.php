@@ -44,6 +44,9 @@ if (!isset($_SESSION['kullanici_ad'])) {
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
   <!--dropify-->
   <link rel="stylesheet" href="assets/css/dropify.min.css">
+  <!--datatables-->
+  <link rel="stylesheet" href="assets/css/datatables.min.css">
+ 
 </head>
 
 <body>

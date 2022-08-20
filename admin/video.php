@@ -54,48 +54,50 @@ $kategoriso1->execute();
 					<button style="border-radius: 0px;" type="submit" name="arama" class="btn btn-primary">Ara!</button>
 				</div>
 			</form>
-			<form action="../islem.php" method="POST">
-				<table class="table table-striped table-md text-center" id="example">
-					<tr>
-						<th class="text-center">Video Kapak Resim</th>
-						<th>Video Başlık</th>
-						<th>Video Kategori</th>
-						<th>Slider</th>
-						<th>Aktif</th>
-						<th>
-							İşlemler
-						</th>
-						<a href="video-ekle.php" class="btn btn-success my-3 mx-3" style="float: right;"><i class="fa fa-plus"></i> Yeni Ekle</a>
-					</tr>
-
-					<?php while ($videocek = $videosor->fetch(PDO::FETCH_ASSOC)) {
-						$id = $videocek['id'];
-					?>
-						<tr>
-							<td><img src="../<?=$videocek['video_kapak']?>" alt="banner" width="200"></td>
-							<td class="text-center"><?= $videocek['video_baslik'] ?></td>
-							<?php $kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC); ?>
-							<td><?= $kategoricek['kategori_ad']; ?></td>
-							<td class="text-center">
-								<?php echo ($videocek['video_slider'] == 1 ? '<p class="alert alert-success rounded-pill">Slider</p>' : '<p class="alert alert-danger rounded-pill">Slider Değil</p>') ?>
-							</td>
-							<td class="text-center">
-								<?php echo ($videocek['isActive'] == 1 ? '<p class="alert alert-success rounded-pill">Aktif</p>' : '<p class="alert alert-danger rounded-pill">Pasif</p>') ?>
-							</td>
-							<td>
-								<a href="video-duzenle.php?id=<?= $videocek['id'] ?>" class="btn btn-outline-info rounded-pill mx-2 px-2"><i class="fa fa-pencil-alt"></i> Düzenle</a>
-								<a href="../islem.php?videosil=ok&id=<?= $videocek['id'] ?>" onclick="return confirm('Silmek istediğinize emin misiniz?')" class="btn btn-outline-primary rounded-pill mx-2 px-2"><i class="fa fa-trash"></i> Sil</a>
-							</td>
-						</tr>
-					<?php } ?>
-				</table>
 		</div>
+	</div>
+
+	<a href="video-ekle.php" class="btn btn-success my-3 mx-3" style="float: right;"><i class="fa fa-plus"></i> Yeni Ekle</a>
+	<form action="../islem.php" method="POST">
+		<table class="table table-striped table-md text-center" id="example">
+			<thead>
+				<tr>
+					<th class="text-center">Video Kapak Resim</th>
+					<th class="text-center">Video Başlık</th>
+					<th class="text-center">Video Kategori</th>
+					<th class="text-center">Slider</th>
+					<th class="text-center">Aktif</th>
+					<th class="text-center">
+						İşlemler
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php while ($videocek = $videosor->fetch(PDO::FETCH_ASSOC)) {
+					$id = $videocek['id'];
+				?>
+					<tr>
+						<td><img src="../<?= $videocek['video_kapak'] ?>" alt="banner" width="200"></td>
+						<td class="text-center"><?= $videocek['video_baslik'] ?></td>
+						<?php $kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC); ?>
+						<td><?= $kategoricek['kategori_ad']; ?></td>
+						<td class="text-center">
+							<?php echo ($videocek['video_slider'] == 1 ? '<p class="alert alert-success rounded-pill">Slider</p>' : '<p class="alert alert-danger rounded-pill">Slider Değil</p>') ?>
+						</td>
+						<td class="text-center">
+							<?php echo ($videocek['isActive'] == 1 ? '<p class="alert alert-success rounded-pill">Aktif</p>' : '<p class="alert alert-danger rounded-pill">Pasif</p>') ?>
+						</td>
+						<td>
+							<a href="video-duzenle.php?id=<?= $videocek['id'] ?>" class="btn btn-outline-info rounded-pill mx-2 px-2"><i class="fa fa-pencil-alt"></i> Düzenle</a>
+							<a href="../islem.php?videosil=ok&id=<?= $videocek['id'] ?>" onclick="return confirm('Silmek istediğinize emin misiniz?')" class="btn btn-outline-primary rounded-pill mx-2 px-2"><i class="fa fa-trash"></i> Sil</a>
+						</td>
+					</tr>
+				<?php } ?>
+			</tbody>
+		</table>
 		<div class="col-md-12 text-right">
 			<a class="btn btn-warning" href="index.php"><i class="fa fa-long-arrow-alt-left"></i> Geri Dön</a>
 		</div>
-		</form>
-	</div>
-</div>
-</div>
+	</form>
 </div>
 <?php include 'footer.php' ?>

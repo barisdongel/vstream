@@ -1,3 +1,11 @@
+<?php
+include 'baglan.php';
+$video_id = $_GET['id'];
+//kategori çek
+$videosor = $db->prepare("SELECT * FROM video_tbl WHERE id=:video_id");
+$videosor->execute(array('video_id' => $video_id));
+$videocek = $videosor->fetch(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vstream - Media Landing Page</title>
+    <title><?=$videocek['video_baslik']?></title>
 
     <link rel="stylesheet" href="css/themify-icons.css">
     <!-- Favicon icon -->
@@ -24,9 +32,9 @@
 
 
     <div class='player-container'>
-        <a href="season.html" class="close-video-player"><i class="ti-close"></i></a>
+        <a href="season.php?id<?=$videocek['id']?>" class="close-video-player"><i class="ti-close"></i></a>
         <div class='player'>
-            <video id='video' src='images/video1.mp4' playsinline></video>
+            <video id='video' src='<?php echo (!empty($videocek['video_url']) ? $videocek['video_url'] : $videocek['video_file']) ?>' playsinline></video>
             <div class='play-btn-big'></div>
             <div class='controls'>
                 <div class="time"><span class="time-current"></span><span class="time-total"></span></div>

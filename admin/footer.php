@@ -25,11 +25,19 @@
 <script src="assets/dropzone/dist/dropzone.js"></script>
 <!-- General JS Scripts -->
 <script src="assets/js/dropify.min.js"></script>
+<!--sweetalert-->
+<script src="assets/bundles/sweetalert/sweetalert.min.js"></script>
 <!--CK Editor-->
 <script src="../ckeditor/ckeditor.js"></script>
+<script src="assets/js/datatables.min.js"></script>
 <script>
   CKEDITOR.replace('ckeditor1');
   $('.dropify').dropify();
+</script>
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+  });
 </script>
 </body>
 
