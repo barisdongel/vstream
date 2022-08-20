@@ -11,9 +11,6 @@
             <div class="col-sm-12">
                 <div class="slide-slider-full owl-carousel owl-theme">
                     <?php
-                    $videosor = $db->prepare("SELECT * FROM video_tbl WHERE isActive = 1 ORDER BY video_tarih DESC");
-                    $videosor->execute(array(0));
-                    $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($videocek as $rows) { ?>
                         <div class="owl-items">
                             <form action="islem.php" method="POST">
@@ -70,13 +67,13 @@
                     ));
                     $listesor = $listecek->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($listesor as $row) {
-                        $videosor = $db->prepare("SELECT * FROM video_tbl WHERE id=:list_id AND isActive = 1");
-                        $videosor->execute(array(
+                        $videolist = $db->prepare("SELECT * FROM video_tbl WHERE id=:list_id AND isActive = 1");
+                        $videolist->execute(array(
                             'list_id' => $row['video_id']
                         ));
-                        $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
+                        $list = $videolist->fetchAll(PDO::FETCH_ASSOC);
 
-                        foreach ($videocek as $rows) { ?>
+                        foreach ($list as $rows) { ?>
                             <div class="owl-items">
                                 <a class="slide-one" href="">
                                     <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image"></div>

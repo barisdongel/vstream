@@ -7,8 +7,8 @@ include 'function.php';
 $kullanici_ad = $_SESSION['kullanici_ad'];
 $kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad AND kullanici_id=:id");
 $kullanicisor->execute(array(
-  'ad' => $kullanici_ad,
-  'id' => $_SESSION['kullanici_id']
+    'ad' => $kullanici_ad,
+    'id' => $_SESSION['kullanici_id']
 ));
 $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
@@ -26,16 +26,9 @@ $kategorisor = $db->prepare("SELECT * FROM kategori_tbl LIMIT 6");
 $kategorisor->execute();
 $kategoricek = $kategorisor->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_POST['aranan'])) {
-    $aranan = $_POST['aranan'];
-    $videosor = $db->prepare("SELECT * FROM video_tbl WHERE video_baslik LIKE '%$aranan%' ORDER BY id ASC limit 20");
-    $videosor->execute();
-    $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
-} else {
-    $videosor = $db->prepare("SELECT * FROM video_tbl");
-    $videosor->execute();
-    $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
-}
+$videosor = $db->prepare("SELECT * FROM video_tbl");
+$videosor->execute();
+$videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -79,7 +72,7 @@ if (isset($_POST['aranan'])) {
                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav nav-menu float-none text-center">
                                 <?php foreach ($kategoricek as $row) { ?>
-                                    <li class="nav-item"><a class="nav-link" href="categories.php?kategori_id=<?=$row['kategori_id']?>"><?= $row['kategori_ad'] ?></a></li>
+                                    <li class="nav-item"><a class="nav-link" href="categories.php?kategori_id=<?= $row['kategori_id'] ?>"><?= $row['kategori_ad'] ?></a></li>
                                 <?php } ?>
                             </ul>
                         </div>
@@ -87,7 +80,7 @@ if (isset($_POST['aranan'])) {
                     <div class="col-lg-4">
 
                         <div class="user-avater">
-                            <img src="<?=$kullanicicek['kullanici_foto']?>" alt="user">
+                            <img src="<?= $kullanicicek['kullanici_foto'] ?>" alt="user">
                             <div class="user-menu">
                                 <ul>
                                     <li><a href="profile.php"><i class="fa-solid fa-user"></i> Profilim</a></li>
@@ -97,8 +90,8 @@ if (isset($_POST['aranan'])) {
                             </div>
                         </div>
                         <div class="search-div">
-                            <form action="islem.php" method="POST">
-                                <input type="text" placeholder="Ara..." name="aranan">
+                            <form action="search.php" method="POST">
+                                <input type="text" placeholder="Ara..." name="arama">
                             </form>
                         </div>
                     </div>
