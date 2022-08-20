@@ -1,6 +1,6 @@
 <?php 
 session_start();
-unset($_SESSION['kullanici_ad']);
+unset($_SESSION['admin_id']);
 
 header('Location:login.php?durum=1');
  ?>

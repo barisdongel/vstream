@@ -383,22 +383,22 @@ if ($_GET['kategorisil'] == 'ok') {
 /*Admin Girişi*/
 if (isset($_POST['adminlogin'])) {
 
-	$kullanici_ad = $_POST['kullanici_ad'];
-	$kullanici_sifre = md5($_POST['kullanici_sifre']);
+	$admin_ad = $_POST['admin_ad'];
+	$admin_sifre = md5($_POST['admin_sifre']);
 
-	if ($kullanici_ad && $kullanici_sifre) {
+	if ($admin_ad && $admin_sifre) {
 
-		$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad and kullanici_sifre=:sifre and kullanici_yetki=0");
-		$kullanicisor->execute(array(
-			'ad' => $kullanici_ad,
-			'sifre' => $kullanici_sifre
+		$adminsor = $db->prepare("SELECT * FROM admin_tbl where admin_ad=:ad and admin_sifre=:sifre");
+		$adminsor->execute(array(
+			'ad' => $admin_ad,
+			'sifre' => $admin_sifre
 		));
-		echo $say = $kullanicisor->rowCount();
-		$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+		echo $say = $adminsor->rowCount();
+		$admincek = $adminsor->fetch(PDO::FETCH_ASSOC);
 
 		if ($say > 0) {
-			$_SESSION['kullanici_ad'] = $kullanici_ad;
-			$_SESSION['kullanici_id'] = $kullanicicek['kullanici_id'];
+			$_SESSION['admin_ad'] = $admin_ad;
+			$_SESSION['admin_id'] = $admincek['admin_id'];
 			header('Location:admin/index.php');
 		} else {
 			echo "<script>
@@ -463,7 +463,7 @@ if (isset($_POST['kayitol'])) {
 			'ad' => $_POST['kullanici_ad'],
 			'mail' => $_POST['kullanici_mail'],
 			'telefon' => $_POST['kullanici_telefon'],
-			'zaman' => date('Y-m-d H:i:s')
+			'zaman' => $_POST['tarih']
 		));
 
 		if ($insert) {
@@ -532,7 +532,7 @@ if (isset($_POST['kullaniciekle'])) {
 		");
 	$insert = $urunkaydet->execute(array(
 		'ad' => $_POST['kullanici_ad'],
-		'sifre' => md5($_POST['kullanici_sifre']),
+		'sifre' => $_POST['kullanici_sifre'],
 		'zaman' => $_POST['kullanici_zaman'],
 		'hakkinda' => $_POST['kullanici_hakkinda'],
 		'dogumyeri' => $_POST['kullanici_dogumyeri'],

@@ -24,43 +24,15 @@ $calisansor->execute();
 			<div class="profile-widget-header">
 				<div class="row">
 					<div class="col-12">
-						<img alt="image" src="../<?=$kullanicicek['kullanici_foto'] ?>"
+						<img alt="image" src="../<?=$kullanicicek['admin_foto'] ?>"
 							class="rounded-circle profile-widget-picture box-center">
 					</div>
 				</div>
 			</div>
 			<div class="profile-widget-description pb-0">
 				<div class="profile-widget-name">
-					<?=$kullanicicek['kullanici_adsoyad'] ?>
-					<div class="text-muted d-inline font-weight-normal">
-						<div class="slash"></div>
-						<?php
-						if ($kullanicicek['kullanici_yetki']==0 ) {
-							echo "ROOT";
-						}elseif ($kullanicicek['kullanici_yetki']==1 ) {
-							echo "YÖNETİCİ";
-						}elseif ($kullanicicek['kullanici_yetki']==2 ) {
-							echo "ÜYE";
-						}else{
-							echo "KULLANICI";
-						}
-						?>
-					</div>
+					<?=$kullanicicek['admin_ad'] ?>
 				</div>
-				<p><?=$kullanicicek['kullanici_hakkinda'] ?></p>
-			</div>
-			<div class="card-footer text-center pt-0">
-				<div class="font-weight-bold mb-2 text-small">Sosyal Medya
-				</div>
-				<a href="<?=$kullanicicek['kullanici_facebook'] ?>" class="btn btn-social-icon mr-1 btn-facebook">
-					<i class="fab fa-facebook-f"></i>
-				</a> <a href="<?=$kullanicicek['kullanici_twitter'] ?>" class="btn btn-social-icon mr-1 btn-twitter">
-					<i class="fab fa-twitter"></i>
-				</a> <a href="<?=$kullanicicek['kullanici_github'] ?>" class="btn btn-social-icon mr-1 btn-github">
-					<i class="fab fa-github"></i>
-				</a> <a href="<?=$kullanicicek['kullanici_instagram'] ?>" class="btn btn-social-icon mr-1 btn-instagram">
-					<i class="fab fa-instagram"></i>
-				</a>
 			</div>
 		</div>
 	</div>

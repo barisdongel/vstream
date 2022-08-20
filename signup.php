@@ -43,7 +43,7 @@
                                   <input class="form-control" type="text" placeholder="Telefon Numaranız" name="kullanici_telefon">
                                 </div>
                                 <div class="form-group button-block text-center">
-                                  <button type="submit" class="form-btn" name="kayitol">Kayıt Talebi Oluştur</button>
+                                  <button class="form-btn" name="kayitol">Kayıt Talebi Oluştur</button>
                                   <p class="sign-up-text">Zaten Hesabın Var Mı ?<a href="signin.php"> Giriş Yap</a></p>
                                 </div>
                                 

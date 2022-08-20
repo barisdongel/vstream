@@ -6,3 +6,6 @@ RewriteEngine on
 ErrorDocument 404 http://localhost/vstream/404.php
 
 RewriteRule ^anasayfa$ index.php [NC,L]
+
+php_value post_max_size 5000M
+php_value upload_max_filesize 5000M

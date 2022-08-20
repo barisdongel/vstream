@@ -29,8 +29,8 @@
                                     <button class="btn btn-outline-dark rounded-0 my-2" name="dahasonraizle"> <i class="fa fa-clock"></i> Daha Sonra İzle</button>
                                 <?php } ?>
                             </form>
-                            <a class="slide-one" href="season.php?id=<?=$rows['id']?>">
-                                <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image"></div>
+                            <a class="slide-one" href="season.php?id=<?= $rows['id'] ?>">
+                                <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image" style="height:300px;"></div>
                                 <div class="slide-content">
                                     <h2>
                                         <?= $rows['video_baslik'] ?>
@@ -53,7 +53,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6 text-left mb-4 mt-4">
-                <h2>Daha Sonra İzlemek İstediklerim</h2>
+                <?php
+                $listecek = $db->prepare("SELECT * FROM list_tbl WHERE uye_id=:uye");
+                $listecek->execute(array(
+                    'uye' => $kullanicicek['kullanici_id']
+                ));
+                $listesor = $listecek->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+                <h2 class="<?=(empty($listesor) ? 'd-none' : 'd-block')?>">Daha Sonra İzlemek İstediklerim</h2>
             </div>
 
         </div>
@@ -61,11 +68,6 @@
             <div class="col-sm-12">
                 <div class="slide-slider-full owl-carousel owl-theme">
                     <?php
-                    $listecek = $db->prepare("SELECT * FROM list_tbl WHERE uye_id=:uye");
-                    $listecek->execute(array(
-                        'uye' => $kullanicicek['kullanici_id']
-                    ));
-                    $listesor = $listecek->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($listesor as $row) {
                         $videolist = $db->prepare("SELECT * FROM video_tbl WHERE id=:list_id AND isActive = 1");
                         $videolist->execute(array(
@@ -75,7 +77,7 @@
 
                         foreach ($list as $rows) { ?>
                             <div class="owl-items">
-                                <a class="slide-one" href="season.php?id=<?=$rows['id']?>">
+                                <a class="slide-one" href="season.php?id=<?= $rows['id'] ?>">
                                     <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image"></div>
                                     <div class="slide-content">
                                         <h2>
@@ -116,7 +118,7 @@
                     foreach ($kategoricek as $row) {
                     ?>
                         <div class="owl-items">
-                            <a href="categories.php?kategori_id=<?=$row['kategori_id']?>" class="category-wrap" style="background-image: url(images/gb<?= $i ?>.png);"><span><?= $row['kategori_ad'] ?></span></a>
+                            <a href="categories.php?kategori_id=<?= $row['kategori_id'] ?>" class="category-wrap" style="background-image: url(images/gb<?= $i ?>.png);"><span><?= $row['kategori_ad'] ?></span></a>
                         </div>
                     <?php
                         if ($i >= 4) {

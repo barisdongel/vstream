@@ -8,15 +8,15 @@ $ayarsor = $db->prepare("SELECT * FROM ayar_tbl WHERE ayar_id=?");
 $ayarsor->execute(array(0));
 $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
 
-$kullanici_ad = $_SESSION['kullanici_ad'];
-$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad AND kullanici_id=:id AND kullanici_yetki=0");
-$kullanicisor->execute(array(
-  'ad' => $kullanici_ad,
-  'id' => $_SESSION['kullanici_id']
+$admin_ad = $_SESSION['admin_ad'];
+$adminsor = $db->prepare("SELECT * FROM admin_tbl where admin_ad=:ad AND admin_id=:id");
+$adminsor->execute(array(
+  'ad' => $admin_ad,
+  'id' => $_SESSION['admin_id']
 ));
-$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+$kullanicicek = $adminsor->fetch(PDO::FETCH_ASSOC);
 
-if (!isset($_SESSION['kullanici_ad'])) {
+if (!isset($_SESSION['admin_ad'])) {
 
   header('location:login.php');
 }
@@ -67,11 +67,11 @@ if (!isset($_SESSION['kullanici_ad'])) {
         </div>
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-              <img alt="image" src="../<?= $kullanicicek['kullanici_foto'] ?>" class="user-img-radious-style">
+              <img alt="image" src="../<?= $kullanicicek['admin_foto'] ?>" class="user-img-radious-style">
               <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right">
-              <div class="dropdown-title">Hoşgeldin <?= $_SESSION['kullanici_ad'] ?></div>
-              <a href="kullanici-profil.php" class="dropdown-item has-icon">
+              <div class="dropdown-title">Hoşgeldin <?= $_SESSION['admin_ad'] ?></div>
+              <a href="javascript:void(0)" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profil
               </a>
               <div class="dropdown-divider"></div>

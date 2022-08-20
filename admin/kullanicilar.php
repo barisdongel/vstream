@@ -16,6 +16,7 @@ $kullanicicek=$kullanicisor->fetch(PDO::FETCH_ASSOC);
         <tr>
           <th>Kullanıcı Fotoğrafı</th>
           <th>Kullanıcı Adı</th>
+          <th>Kullanıcı Şifresi</th>
           <th>Kullanıcı Ad Soyad</th>
           <th>Kullanıcı Doğum Yeri</th>
           <th>Kullanıcı Doğum Tarihi</th>
@@ -30,6 +31,7 @@ $kullanicicek=$kullanicisor->fetch(PDO::FETCH_ASSOC);
             <tr>
               <td><img class="w-50 img-fluid" src="../<?=$kullanicicek['kullanici_foto']; ?>"></td>
               <td><?php echo $kullanicicek['kullanici_ad']; ?></td>
+              <td><?php echo $kullanicicek['kullanici_sifre']; ?></td>
               <td><?php echo $kullanicicek['kullanici_adsoyad']; ?></td>
               <td><?php echo $kullanicicek['kullanici_dogumyeri']; ?></td>
               <td><?php echo $kullanicicek['kullanici_zaman']; ?></td>

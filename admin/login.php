@@ -32,11 +32,11 @@
 									<div class="card-body">
 										<div class="form-group">
 											<label><i class="fa fa-user"></i> Kullanıcı Adı</label>
-											<input type="text" name="kullanici_ad" class="form-control" required="">
+											<input type="text" name="admin_ad" class="form-control" required="">
 										</div>
 										<div class="form-group">
 											<label><i class="fa fa-key"></i> Şifre</label>
-											<input type="password" name="kullanici_sifre" class="form-control" required="">
+											<input type="password" name="admin_sifre" class="form-control" required="">
 										</div>
 									</div>
 									<button style="border-radius: 0px;" type="submit" name="adminlogin" class="btn btn-lg btn-block btn-auth-color" tabindex="4">
