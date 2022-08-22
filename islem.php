@@ -290,7 +290,7 @@ if (isset($_POST['videoduzenle'])) {
 }
 
 //video silme
-if ($_GET['videosil'] == "ok") {
+if (!empty($_GET['videosil']) == "ok") {
 
 	$select = $db->prepare("SELECT * FROM video_tbl where id=:id");
 	$select->execute(array('id' => $_GET['id']));
@@ -308,7 +308,7 @@ if ($_GET['videosil'] == "ok") {
 	}
 }
 //video dosyasını silme
-if ($_GET['videoFilesil'] == "ok") {
+if (!empty($_GET['videoFilesil']) == "ok") {
 
 	$select = $db->prepare("SELECT * FROM video_tbl where id=:id");
 	$select->execute(array('id' => $_GET['id']));
@@ -366,7 +366,7 @@ if (isset($_POST['kategoriduzenle'])) {
 }
 
 //ketegori silme
-if ($_GET['kategorisil'] == 'ok') {
+if (!empty($_GET['kategorisil']) == 'ok') {
 
 	$sil = $db->prepare("DELETE FROM kategori_tbl where kategori_id=:kategori_id");
 	$kontrol = $sil->execute(array(
@@ -412,27 +412,27 @@ if (isset($_POST['adminlogin'])) {
 /*Kullanici Girişi*/
 if (isset($_POST['login'])) {
 
-	$kullanici_ad = $_POST['kullanici_ad'];
+	$kullanici_mail = $_POST['kullanici_mail'];
 	$kullanici_sifre = md5($_POST['kullanici_sifre']);
 
-	if (!filter_var($kullanici_ad, FILTER_VALIDATE_EMAIL)) {
+	if (!filter_var($kullanici_mail, FILTER_VALIDATE_EMAIL)) {
 		echo "<script>
 		alert('Geçerli bir e-posta adresi girin.');
 		window.location.href='signin.php';
 		</script>";
 	} else {
-		if ($kullanici_ad && $kullanici_sifre) {
+		if ($kullanici_mail && $kullanici_sifre) {
 
-			$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad and kullanici_sifre=:sifre");
+			$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_mail=:mail and kullanici_sifre=:sifre");
 			$kullanicisor->execute(array(
-				'ad' => $kullanici_ad,
+				'mail' => $kullanici_mail,
 				'sifre' => $kullanici_sifre
 			));
 			echo $say = $kullanicisor->rowCount();
 			$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
 			if ($say > 0) {
-				$_SESSION['kullanici_ad'] = $kullanici_ad;
+				$_SESSION['kullanici_mail'] = $kullanici_mail;
 				$_SESSION['kullanici_id'] = $kullanicicek['kullanici_id'];
 				header('Location:index.php');
 			} else {
@@ -448,59 +448,109 @@ if (isset($_POST['login'])) {
 /*Kullanici Kayıt Olma Talebi*/
 if (isset($_POST['kayitol'])) {
 
-	$kullanici_mail = $_POST['kullanici_mail'];
+	$kullanici_token = $_POST['kullanici_token'];
 	$kullanici_ad = $_POST['kullanici_ad'];
+	$kullanici_mail = $_POST['kullanici_mail'];
+	$kullanici_telefon = $_POST['kullanici_tel'];
+	$kullanici_sifre = md5($_POST['kullanici_sifre']);
+	$kullanici_sifre2 = md5($_POST['kullanici_sifre2']);
 
-	if ($kullanici_mail && $kullanici_ad) {
+	if (filter_var($kullanici_mail, FILTER_VALIDATE_EMAIL) && $kullanici_ad) {
+		if ($kullanici_sifre == $kullanici_sifre2) {
+			$kullanicikayittalebi = $db->prepare("INSERT INTO kullanici_tbl SET
+				kullanici_ad=:ad,
+				kullanici_token=:token,
+				kullanici_mail=:mail,
+				kullanici_tel=:telefon,
+				kullanici_sifre=:sifre,
+				kullanici_yetki=:yetki,
+				kullanici_zaman=:zaman
+			");
+			$insert = $kullanicikayittalebi->execute(array(
+				'ad' => $kullanici_ad,
+				'token' => $kullanici_token,
+				'mail' => $kullanici_mail,
+				'telefon' => $kullanici_telefon,
+				'sifre' => $kullanici_sifre,
+				'yetki' => 3,
+				'zaman' => date('Y-m-d H:i:s')
+			));
+			if ($insert) {
+				$kayitac = $db->prepare("INSERT INTO kkayit_tbl SET
+					kullanici_token=:token,
+					tarih=:zaman,
+					onay=:o
+				");
+				$insertkayit = $kayitac->execute(array(
+					'token' => $_POST['kullanici_token'],
+					'zaman' => date('Y-m-d H:i:s'),
+					'o' => 0
+				));
 
-		$kullanicikayittalebi = $db->prepare("INSERT INTO kkayit_tbl SET
-		kullanici_ad=:ad,
-		kullanici_mail=:mail,
-		kullanici_telefon=:telefon,
-		tarih=:zaman
-		");
-		$insert = $kullanicikayittalebi->execute(array(
-			'ad' => $_POST['kullanici_ad'],
-			'mail' => $_POST['kullanici_mail'],
-			'telefon' => $_POST['kullanici_telefon'],
-			'zaman' => $_POST['tarih']
-		));
-
-		if ($insert) {
-			echo "<script>
-			alert('Talebiniz alındı yakın zamanda size geri dönüş sağlanacak.');
-			window.location.href='signin.php';
-			</script>";
+				if (!$insertkayit) {
+					echo "<script>
+					alert('Kayıt ekleme işlemi başarısız.');
+					window.location.href='signup.php';
+					</script>";
+				}
+				echo "<script>
+					alert('Talebiniz alındı yakın zamanda size geri dönüş sağlanacak. Şimdilik geçerli kullanıcı adı ve şifreniz ile siteye giriş yapıp ücretsiz içeriklerden faydalanabilirsiniz.');
+					window.location.href='signin.php';
+				</script>";
+			} else {
+				echo "<script>
+					alert('Kayıt işlemi başarısız.');
+					window.location.href='signup.php';
+				</script>";
+			}
 		} else {
 			echo "<script>
-			alert('Giriş başarısız.');
-			window.location.href='signin.php';
+				alert('Şifreler Uyuşmuyor !');
+				window.location.href='signin.php';
 			</script>";
 		}
+	} else {
+		echo "<script>
+			alert('Geçersiz giriş!');
+			window.location.href='signin.php';
+		</script>";
 	}
 }
 
 /*Kullanici Kayıt Onayla*/
-if ($_GET['kayitonayla'] == 'ok') {
-
-	$kayitonayla = $db->prepare("UPDATE kkayit_tbl SET
-		onay=:o
-		WHERE id={$_GET['id']}
+if (isset($_POST['kayitonayla'])) {
+	//kullanıcı yetkisini değiştir
+	$token = (int) $_POST['kullanici_token'];
+	$yetkidegistir = $db->prepare("UPDATE kullanici_tbl SET
+		kullanici_yetki=:y
+		WHERE kullanici_token=$token
 		");
-	$update = $kayitonayla->execute(array(
-		'o' => 1
+	$updateyetki = $yetkidegistir->execute(array(
+		'y' => 2
 	));
+	
+	if ($updateyetki) {
+		$kayitonayla = $db->prepare("UPDATE kkayit_tbl SET
+		onay=:o,
+		tarih=:tarih
+		WHERE kullanici_token=$token
+		");
+		$update = $kayitonayla->execute(array(
+			'o' => 1,
+			'tarih' => date('Y-m-d H:i:s')
+		));
 
-	if ($update) {
-		echo "<script>
+		if ($update) {
+			echo "<script>
 		alert('Kayıt onaylandı olarak işaretlendi.');
 		window.location.href='admin/kayit-talepleri.php';
 		</script>";
-	} else {
-		echo "<script>
+		} else {
+			echo "<script>
 		alert('İşlem başarısız.');
 		window.location.href='admin/kayit-talepleri.php';
 		</script>";
+		}
 	}
 }
 
@@ -612,7 +662,7 @@ if (isset($_POST['kullaniciduzenle'])) {
 }
 
 //Kullanici silme
-if ($_GET['kullanicisil'] == "ok") {
+if (!empty($_GET['kullanicisil']) == "ok") {
 
 	$select = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_id=:kullanici_id");
 	$select->execute(array('kullanici_id' => $_GET['kullanici_id']));

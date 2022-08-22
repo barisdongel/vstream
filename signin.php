@@ -39,14 +39,14 @@
                             <h2>Giriş Yap</h2>
                             <form action="islem.php" method="POST">
                                 <div class="form-group mt-5">
-                                  <input class="form-control" type="email" placeholder="Email" name="kullanici_ad">
-                                  <input class="form-control" type="password" placeholder="Şifre" name="kullanici_sifre">
+                                    <input class="form-control" type="email" placeholder="Email" name="kullanici_mail">
+                                    <input class="form-control" type="password" placeholder="Şifre" name="kullanici_sifre">
                                 </div>
                                 <div class="form-group button-block text-center">
-                                  <button class="form-btn" name="login">Giriş Yap</button>
-                                  <p class="sign-up-text">Hesabın Yok Mu? <a href="signup.php">Kayıt Ol</a></p>
+                                    <button class="form-btn" name="login">Giriş Yap</button>
+                                    <p class="sign-up-text">Hesabın Yok Mu? <a href="signup.php">Kayıt Ol</a></p>
                                 </div>
-                                
+
                             </form>
                         </div>
                     </div>
@@ -55,17 +55,17 @@
         </section>
 
 
-         
+
 
     </div>
 
-    
+
 
 
     <script src="js/plugin.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="js/scripts.js"></script>
-    
+
 </body>
 
 </html>

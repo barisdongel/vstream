@@ -57,7 +57,7 @@ $videolar = $sonvideolar->fetchAll(PDO::FETCH_ASSOC);
                     <?php foreach ($videolar as $rows) { ?>
                         <div class="owl-items">
                             <a class="slide-one" href="season.php?id=<?=$rows['id']?>">
-                                <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image"></div>
+                                <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image" height="300"></div>
                                 <div class="slide-content">
                                     <h2>
                                         <?= $rows['video_baslik'] ?>

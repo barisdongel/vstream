@@ -1,9 +1,5 @@
 <?php include 'header.php' ?>
-<?php include 'sidebar.php';
-$kullanicisor = $db->prepare("SELECT * FROM kkayit_tbl");
-$kullanicisor->execute();
-$kullanicicek = $kullanicisor->fetchAll(PDO::FETCH_ASSOC);
-?>
+<?php include 'sidebar.php' ?>
 <!-- Main Content -->
 <div class="main-content">
 	<div class="col-12 col-md-12 col-lg-12">
@@ -19,23 +15,40 @@ $kullanicicek = $kullanicisor->fetchAll(PDO::FETCH_ASSOC);
 					<th>Kullanıcı Kayıt Talebi Tarihi</th>
 					<th></th>
 				</tr>
-				<?php foreach ($kullanicicek as $row) { ?>
-					<tr>
-						<td><?= $row['kullanici_ad']; ?></td>
-						<td><?= $row['kullanici_mail']; ?></td>
-						<td><?= $row['kullanici_telefon']; ?></td>
-						<td><?= $row['tarih']; ?></td>
-						<td>
-							<?php
-							if ($row['onay'] == 0) {
-							?>
-								<a href="../islem.php?kayitonayla=ok&id=<?= $row['id'] ?>" class="btn btn-success">Onayla</a>
-							<?php } else { ?>
-								<button disabled class="btn btn-secondary">Onaylandı</button>
-							<?php } ?>
-						</td>
-					</tr>
-				<?php } ?>
+				<?php
+				$kayitsor = $db->prepare("SELECT * FROM kkayit_tbl");
+				$kayitsor->execute();
+				$kayitcek = $kayitsor->fetchAll(PDO::FETCH_ASSOC);
+				foreach ($kayitcek as $kayit) {
+					$kullanici_token = $kayit['kullanici_token'];
+					$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl WHERE kullanici_token=:token");
+					$kullanicisor->execute(array(
+						'token' => $kullanici_token
+					));
+					$kullanicicek = $kullanicisor->fetchAll(PDO::FETCH_ASSOC);
+
+					foreach ($kullanicicek as $row) {
+				?>
+						<tr>
+							<td><?= $row['kullanici_ad']; ?></td>
+							<td><?= $row['kullanici_mail']; ?></td>
+							<td><?= $row['kullanici_tel']; ?></td>
+							<td><?= $kayit['tarih']; ?></td>
+							<td>
+								<?php
+								if ($kayit['onay'] == 0) {
+								?>
+									<form action="../islem.php" method="POST">
+										<input type="hidden" name="kullanici_token" value="<?= $kullanici_token ?>">
+										<button type="submit" class="btn btn-success" name="kayitonayla">Onayla</button>
+									</form>
+								<?php } else { ?>
+									<button disabled class="btn btn-secondary">Onaylandı</button>
+								<?php } ?>
+							</td>
+						</tr>
+				<?php }
+				} ?>
 			</table>
 		</div>
 		<div class="col-md-12 text-right">

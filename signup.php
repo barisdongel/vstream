@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,27 +39,30 @@
                             <h2>Kayıt Ol</h2>
                             <form action="islem.php" method="POST">
                                 <div class="form-group mt-5">
-                                  <input class="form-control" type="email" placeholder="Email" name="kullanici_mail">
-                                  <input class="form-control" type="text" placeholder="Adınız" name="kullanici_ad">
-                                  <input class="form-control" type="text" placeholder="Telefon Numaranız" name="kullanici_telefon">
+                                    <input type="hidden" name="kullanici_token" value="<?= md5(rand(0, 9999)) ?>">
+                                    <input class="form-control" type="email" placeholder="Email" name="kullanici_mail">
+                                    <input class="form-control" type="text" placeholder="Adınız" name="kullanici_ad">
+                                    <input class="form-control" type="text" minlength="10" maxlength="11" placeholder="Telefon Numaranız" name="kullanici_tel">
+                                    <input class="form-control" type="password" minlength="6" placeholder="Şifre" name="kullanici_sifre">
+                                    <input class="form-control" type="password" minlength="6" placeholder="Şifre Tekrar" name="kullanici_sifre2">
                                 </div>
                                 <div class="form-group button-block text-center">
-                                  <button class="form-btn" name="kayitol">Kayıt Talebi Oluştur</button>
-                                  <p class="sign-up-text">Zaten Hesabın Var Mı ?<a href="signin.php"> Giriş Yap</a></p>
+                                    <button class="form-btn" name="kayitol">Kayıt Talebi Oluştur</button>
+                                    <p class="sign-up-text">Zaten Hesabın Var Mı ?<a href="signin.php"> Giriş Yap</a></p>
                                 </div>
-                                
+
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>         
+        </section>
     </div>
 
     <script src="js/plugin.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="js/scripts.js"></script>
-    
+
 </body>
 
 </html>

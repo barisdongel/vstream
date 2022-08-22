@@ -47,6 +47,7 @@
           <select class="form-control" name="kullanici_yetki">
             <option value="1">Yönetici</option>
             <option value="2">Üye</option>
+            <option value="3">Ziyaretçi</option>
           </select>
         </div>
         <h6>Sosyal Medya Hesapları</h6>

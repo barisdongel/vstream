@@ -4,15 +4,15 @@ session_start();
 include 'baglan.php';
 include 'function.php';
 
-$kullanici_ad = $_SESSION['kullanici_ad'];
-$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad AND kullanici_id=:id");
+$kullanici_mail = $_SESSION['kullanici_mail'];
+$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_mail=:mail AND kullanici_id=:id");
 $kullanicisor->execute(array(
-    'ad' => $kullanici_ad,
+    'mail' => $kullanici_mail,
     'id' => $_SESSION['kullanici_id']
 ));
 $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
-if (!isset($_SESSION['kullanici_ad'])) {
+if (!isset($_SESSION['kullanici_mail'])) {
     header('location:signin.php');
 }
 
