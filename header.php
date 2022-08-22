@@ -4,18 +4,6 @@ session_start();
 include 'baglan.php';
 include 'function.php';
 
-$kullanici_mail = $_SESSION['kullanici_mail'];
-$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_mail=:mail AND kullanici_id=:id");
-$kullanicisor->execute(array(
-    'mail' => $kullanici_mail,
-    'id' => $_SESSION['kullanici_id']
-));
-$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
-
-if (!isset($_SESSION['kullanici_mail'])) {
-    header('location:signin.php');
-}
-
 //ayarlar
 $ayarsor = $db->prepare("SELECT * FROM ayar_tbl WHERE ayar_id=?");
 $ayarsor->execute(array(0));
@@ -30,6 +18,17 @@ $videosor = $db->prepare("SELECT * FROM video_tbl");
 $videosor->execute();
 $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
 
+$kullanici_mail = $_SESSION['kullanici_mail'];
+$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_mail=:mail AND kullanici_id=:id");
+$kullanicisor->execute(array(
+    'mail' => $kullanici_mail,
+    'id' => $_SESSION['kullanici_id']
+));
+$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+
+if (!isset($_SESSION['kullanici_mail'])) {
+    header('location:signin.php');
+}
 ?>
 
 <!DOCTYPE html>

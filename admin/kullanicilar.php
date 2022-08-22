@@ -28,7 +28,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
             $kullanici_id = $kullanicicek['kullanici_id'];
           ?>
             <tr>
-              <td><img src="../<?= $kullanicicek['kullanici_foto']; ?>" width="300"></td>
+              <td><img src="../<?= $kullanicicek['kullanici_foto']; ?>" width="200"></td>
               <td><?= $kullanicicek['kullanici_ad']; ?></td>
               <td><?= $kullanicicek['kullanici_adsoyad']; ?></td>
               <td><?= $kullanicicek['kullanici_zaman']; ?></td>
