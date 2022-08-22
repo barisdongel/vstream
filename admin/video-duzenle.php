@@ -19,6 +19,10 @@ $videocek = $videosor->fetch(PDO::FETCH_ASSOC);
 						<input type="file" class="dropify" data-default-file="../<?= $videocek['video_kapak'] ?>" name="video_kapak" />
 					</div>
 					<div class="row">
+						<div class="form-group col-md-12">
+							<label><i class="fa fa-heading"></i> Video Başlık</label>
+							<input type="text" name="video_baslik" class="form-control" value="<?= $videocek['video_baslik'] ?>">
+						</div>
 						<div class="form-group col-md-6">
 							<label><i class="fa fa-video"></i> Video Türü</label>
 							<select class="form-select" aria-label="Default select example" id="video-tur">
@@ -37,16 +41,17 @@ $videocek = $videosor->fetch(PDO::FETCH_ASSOC);
 							<label><i class="fas fa-video"></i> Video Upload</label>
 							<input style="height: 50px;" type="file" name="video_file" class="form-control">
 						</div>
-						<div class="form-group d-none col-md-6" id="url">
+						<div class="form-group col-md-6" id="url">
 							<label><i class="fa fa-heading"></i> Video URL</label>
 							<input type="text" name="video_url" class="form-control" value="<?= $videocek['video_url'] ?>">
 						</div>
 					</div>
 					<div class="row">
-						<div class="form-group col-md-6">
-							<label><i class="fa fa-heading"></i> Video Başlık</label>
-							<input type="text" name="video_baslik" class="form-control" value="<?= $videocek['video_baslik'] ?>">
+						<div class="form-group col-md-6" id="docs">
+							<label><i class="fas fa-file"></i> Video Dökümanı</label>
+							<input style="height: 50px;" type="file" name="video_documents" class="form-control">
 						</div>
+
 						<div class="form-group col-md-6">
 							<label><i class="fa fa-list-alt"></i> Video Kategori Türü</label>
 							<select class="form-control" name="kategori_tur" id="kategori-tur">

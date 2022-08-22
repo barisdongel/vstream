@@ -188,6 +188,17 @@ if (isset($_POST['videoekle'])) {
 		$refimgyol = '';
 	}
 
+	if (isset($_FILES['video_documents'])) {
+		$uploads_dir = 'video/docs/';
+		@$tmp_name = $_FILES['video_documents']["tmp_name"];
+		@$name = $_FILES['video_documents']["name"];
+		$sayi1 = rand(10000, 99999);
+		$docyol = $uploads_dir . $sayi1 . $name;
+		@move_uploaded_file($tmp_name, "$uploads_dir/$sayi1$name");
+	} else {
+		$docyol = '';
+	}
+
 	if ($_FILES['video_file']['size'] > 0) {
 		$icon_dir = 'video/';
 		@$tmp_icon = $_FILES['video_file']["tmp_name"];
@@ -208,6 +219,7 @@ if (isset($_POST['videoekle'])) {
 		video_kapak=:foto,
 		video_url=:vurl,
 		video_file=:vfile,
+		video_documents=:docs,
 		video_tarih=:tarih,
 		video_slider=:slider,
 		isActive=:active
@@ -220,6 +232,7 @@ if (isset($_POST['videoekle'])) {
 		'foto' => $refimgyol,
 		'vurl' => $_POST['video_url'],
 		'vfile' => $fileyol,
+		'docs' => $docyol,
 		'tarih' => date("Y-m-d H:i:s"),
 		'slider' => $_POST['video_slider'],
 		'active' => $_POST['isActive']
@@ -250,6 +263,17 @@ if (isset($_POST['videoduzenle'])) {
 		$refimgyol = $videocek['video_kapak'];
 	}
 
+	if ($_FILES['video_documents']['size'] > 0) {
+		$uploads_dir = 'video/docs/';
+		@$tmp_name = $_FILES['video_documents']["tmp_name"];
+		@$name = $_FILES['video_documents']["name"];
+		$sayi1 = rand(10000, 99999);
+		$docyol = $uploads_dir . $sayi1 . $name;
+		@move_uploaded_file($tmp_name, "$uploads_dir/$sayi1$name");
+	} else {
+		$docyol = $videocek['video_documents'];
+	}
+
 	if ($_FILES['video_file']['size'] > 0) {
 		$icon_dir = 'video/';
 		@$tmp_icon = $_FILES['video_file']["tmp_name"];
@@ -270,6 +294,7 @@ if (isset($_POST['videoduzenle'])) {
 		video_kapak=:foto,
 		video_url=:vurl,
 		video_file=:vfile,
+		video_documents=:docs,
 		video_slider=:slider,
 		isActive=:active
 		WHERE id={$_POST['id']}
@@ -282,6 +307,7 @@ if (isset($_POST['videoduzenle'])) {
 		'foto' => $refimgyol,
 		'vurl' => $_POST['video_url'],
 		'vfile' => $fileyol,
+		'docs' => $docyol,
 		'slider' => $_POST['video_slider'],
 		'active' => $_POST['isActive']
 	));
