@@ -31,7 +31,7 @@ $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
         <div class="row">
             <?php foreach ($videocek as $rows) { ?>
                 <div class="col-md-4 col-lg-3 mb-3">
-                    <a class="slide-one" href="">
+                    <a class="slide-one" href="season.php?id=<?= $rows['id'] ?>">
                         <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image"></div>
                         <div class="slide-content">
                             <h2>

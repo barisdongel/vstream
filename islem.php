@@ -567,11 +567,11 @@ if (isset($_POST['kullaniciekle'])) {
 
 	$urunkaydet = $db->prepare("INSERT INTO kullanici_tbl SET
 		kullanici_ad=:ad,
+		kullanici_mail=:mail,
 		kullanici_sifre=:sifre,
 		kullanici_zaman=:zaman,
 		kullanici_hakkinda=:hakkinda,
 		kullanici_dogumyeri=:dogumyeri,
-		kullanici_adsoyad=:adsoyad,
 		kullanici_yetki=:yetki,
 		kullanici_facebook=:facebook,
 		kullanici_twitter=:twitter,
@@ -582,11 +582,11 @@ if (isset($_POST['kullaniciekle'])) {
 		");
 	$insert = $urunkaydet->execute(array(
 		'ad' => $_POST['kullanici_ad'],
-		'sifre' => $_POST['kullanici_sifre'],
+		'mail' => $_POST['kullanici_mail'],
+		'sifre' => md5($_POST['kullanici_sifre']),
 		'zaman' => $_POST['kullanici_zaman'],
 		'hakkinda' => $_POST['kullanici_hakkinda'],
 		'dogumyeri' => $_POST['kullanici_dogumyeri'],
-		'adsoyad' => $_POST['kullanici_adsoyad'],
 		'yetki' => $_POST['kullanici_yetki'],
 		'facebook' => $_POST['kullanici_facebook'],
 		'twitter' => $_POST['kullanici_twitter'],

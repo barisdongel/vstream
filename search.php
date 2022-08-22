@@ -27,7 +27,7 @@ $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
                 <div class="slide-slider owl-carousel owl-theme">
                     <?php foreach ($videocek as $rows) { ?>
                         <div class="owl-items">
-                            <a class="slide-one" href="">
+                            <a class="slide-one" href="season.php?id=<?= $rows['id'] ?>">
                                 <div class="slide-image"><img src="<?= $rows['video_kapak'] ?>" alt="image"></div>
                                 <div class="slide-content">
                                     <h2>

@@ -1,14 +1,5 @@
 <?php
-include 'header.php';
-$kullanici_ad = $_SESSION['kullanici_ad'];
-$kullanicisor = $db->prepare("SELECT * FROM kullanici_tbl where kullanici_ad=:ad AND kullanici_id=:id");
-$kullanicisor->execute(array(
-  'ad' => $kullanici_ad,
-  'id' => $_SESSION['kullanici_id']
-));
-$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
-
-?>
+include 'header.php';?>
 
 <div class="page-nav">
   <div class="container">

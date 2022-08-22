@@ -16,8 +16,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label><i class="fa fa-heading"></i> KullaniciAdı</label>
-          <input type="email" name="kullanici_ad" class="form-control" required="">
+          <label><i class="fa fa-heading"></i> Kullanici Adı</label>
+          <input type="email" name="kullanici_mail" class="form-control" required="">
         </div>
         <div class="form-group">
           <label><i class="fa fa-share"></i> Kullanici Şifre</label>
@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
           <label><i class="fas fa-list-ol"></i> Kullanici Ad Soyad</label>
-          <input type="text" name="kullanici_adsoyad" class="form-control" required="">
+          <input type="text" name="kullanici_ad" class="form-control" required="">
         </div>
         <div class="form-group">
           <label><i class="fas fa-list-ol"></i> Kullanici Hakkında</label>
