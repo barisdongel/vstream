@@ -204,6 +204,7 @@ if (isset($_POST['videoekle'])) {
 		video_baslik=:baslik,
 		video_aciklama=:aciklama,
 		video_kategori=:kategori,
+		video_alt_kategori=:altkategori,
 		video_kapak=:foto,
 		video_url=:vurl,
 		video_file=:vfile,
@@ -215,6 +216,7 @@ if (isset($_POST['videoekle'])) {
 		'baslik' => $_POST['video_baslik'],
 		'aciklama' => $_POST['video_aciklama'],
 		'kategori' => $_POST['video_kategori'],
+		'altkategori' => $_POST['video_alt_kategori'],
 		'foto' => $refimgyol,
 		'vurl' => $_POST['video_url'],
 		'vfile' => $fileyol,
@@ -264,6 +266,7 @@ if (isset($_POST['videoduzenle'])) {
 		video_baslik=:baslik,
 		video_aciklama=:aciklama,
 		video_kategori=:kategori,
+		video_alt_kategori=:altkategori,
 		video_kapak=:foto,
 		video_url=:vurl,
 		video_file=:vfile,
@@ -275,6 +278,7 @@ if (isset($_POST['videoduzenle'])) {
 		'baslik' => $_POST['video_baslik'],
 		'aciklama' => $_POST['video_aciklama'],
 		'kategori' => $_POST['video_kategori'],
+		'altkategori' => $_POST['video_alt_kategori'],
 		'foto' => $refimgyol,
 		'vurl' => $_POST['video_url'],
 		'vfile' => $fileyol,
@@ -528,7 +532,7 @@ if (isset($_POST['kayitonayla'])) {
 	$updateyetki = $yetkidegistir->execute(array(
 		'y' => 2
 	));
-	
+
 	if ($updateyetki) {
 		$kayitonayla = $db->prepare("UPDATE kkayit_tbl SET
 		onay=:o,
@@ -729,5 +733,61 @@ if (isset($_POST['dahasonraizle'])) {
         javascript:history.go(-1)
         </script>";
 		}
+	}
+}
+
+/*Alt Kategori İşlemleri*/
+
+//ketegori Ekleme
+if (isset($_POST['altkategoriekle'])) {
+	$kategorikaydet = $db->prepare("INSERT INTO alt_kategori SET
+		alt_ad=:ad,
+		alt_ustid=:ustid
+		");
+	$insert = $kategorikaydet->execute(array(
+		'ad' => $_POST['alt_ad'],
+		'ustid' => $_POST['alt_ustid']
+	));
+	if ($insert) {
+		Header("Location:admin/alt-kategori.php?durum=ok");
+	} else {
+		Header("Location:admin/alt-kategori.php?durum=no");
+	}
+}
+
+//ketegori guncelleme
+if (isset($_POST['altkategoriduzenle'])) {
+
+	$kategoriduzenle = $db->prepare("UPDATE alt_kategori SET
+		alt_ad=:ad,
+		alt_ustid=:ustid
+		WHERE alt_id={$_POST['alt_id']}
+		");
+	$update = $kategoriduzenle->execute(array(
+		'ad' => $_POST['alt_ad'],
+		'ustid' => $_POST['alt_ustid']
+	));
+
+	$kategori_id = $_POST['alt_id'];
+
+	if ($update) {
+		Header("Location:admin/alt-kategori.php?alt_id=$kategori_id&durum=ok");
+	} else {
+		Header("Location:admin/alt-kategori.php?durum=no");
+	}
+}
+
+//ketegori silme
+if ($_GET['altkategorisil'] == 'ok') {
+
+	$sil = $db->prepare("DELETE FROM alt_kategori where alt_id=:alt_id");
+	$kontrol = $sil->execute(array(
+		"alt_id" => $_GET['alt_id']
+	));
+
+	if ($kontrol) {
+		Header("Location:admin/alt-kategori.php?durum=ok");
+	} else {
+		Header("Location:admin/alt-kategori.php?durum=no");
 	}
 }

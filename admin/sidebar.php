@@ -19,7 +19,8 @@
         <a href="#" class="nav-link has-dropdown"><i class="fas fa-video"></i><span>Eğitimler</span></a>
         <ul class="dropdown-menu">
           <li><a class="nav-link" href="video.php">Videolar</a></li>
-          <li><a class="nav-link" href="kategoriler.php">Video Kategorileri</a></li>
+          <li><a class="nav-link" href="kategoriler.php">Üst Kategoriler</a></li>
+          <li><a class="nav-link" href="alt-kategori.php">Alt Kategoriler</a></li>
         </ul>
       </li>
       <li><a class="nav-link" href="kullanicilar.php"><i class="fas fa-user"></i><span>Kullanıcı Ayarları</span></a></li>

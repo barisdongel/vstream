@@ -12,11 +12,11 @@ $videocek = $videosor->fetch(PDO::FETCH_ASSOC);
 				<h4>Video Düzenle</h4>
 			</div>
 			<form action="../islem.php" method="POST" enctype="multipart/form-data">
-				<input type="hidden" name="id" value="<?=$videocek['id']?>">
+				<input type="hidden" name="id" value="<?= $videocek['id'] ?>">
 				<div class="card-body">
 					<div class="form-group">
 						<label><i class="fa fa-image"></i> Video Kapak Fotoğrafı</label>
-						<input type="file" class="dropify" data-default-file="../<?=$videocek['video_kapak']?>" name="video_kapak" />
+						<input type="file" class="dropify" data-default-file="../<?= $videocek['video_kapak'] ?>" name="video_kapak" />
 					</div>
 					<div class="row">
 						<div class="form-group col-md-6">
@@ -48,13 +48,34 @@ $videocek = $videosor->fetch(PDO::FETCH_ASSOC);
 							<input type="text" name="video_baslik" class="form-control" value="<?= $videocek['video_baslik'] ?>">
 						</div>
 						<div class="form-group col-md-6">
+							<label><i class="fa fa-list-alt"></i> Video Kategori Türü</label>
+							<select class="form-control" name="kategori_tur" id="kategori-tur">
+								<option value="1">Üst Kategori</option>
+								<option value="0">Alt Kategori</option>
+							</select>
+						</div>
+						<div class="form-group col-md-12" id="ust">
 							<label><i class="fa fa-list-alt"></i> Video Kategorisi</label>
 							<select class="form-control" name="video_kategori">
 								<?php
 								$kategorisor = $db->prepare("SELECT * FROM kategori_tbl ORDER BY kategori_ad ASC");
 								$kategorisor->execute();
 								while ($kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC)) { ?>
-									<option value="<?= $kategoricek['kategori_id'] ?>" <?php echo ($kategoricek['kategori_id'] == $videocek['video_kategori'] ? 'selected' : '') ?>><?= $kategoricek['kategori_ad'] ?></option>
+									<option value="<?php echo $kategoricek['kategori_id'] ?>" <?= ($kategoricek['kategori_id'] == $videocek['video_kategori'] ? 'selected' : '') ?>><?php echo $kategoricek['kategori_ad'] ?></option>
+								<?php } ?>
+							</select>
+						</div>
+						<div class="form-group col-md-12 d-none" id="alt">
+							<label><i class="fa fa-list-alt"></i> Video Kategorisi</label>
+							<select class="form-control" name="video_alt_kategori">
+								<?php
+								$kategorisor = $db->prepare("SELECT * FROM alt_kategori INNER JOIN kategori_tbl on kategori_tbl.kategori_id=alt_kategori.alt_ustid ORDER BY alt_ad ASC");
+								$kategorisor->execute();
+								while ($kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC)) { ?>
+									<option value="<?php echo $kategoricek['alt_id'] ?>" <?= ($kategoricek['alt_id'] == $videocek['video_alt_kategori'] ? 'selected' : '') ?>>
+										<p><?= $kategoricek['kategori_ad'] ?></p>
+										<p>--> <?= $kategoricek['alt_ad'] ?></p>
+									</option>
 								<?php } ?>
 							</select>
 						</div>

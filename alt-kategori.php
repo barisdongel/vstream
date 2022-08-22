@@ -1,18 +1,15 @@
 <?php
 include 'header.php';
-$kategori_id = $_GET['kategori_id'];
-//kategori çek
-$kategorisor = $db->prepare("SELECT * FROM kategori_tbl WHERE kategori_id=:kategori_id");
-$kategorisor->execute(array('kategori_id' => $kategori_id));
-$kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC);
+$alt_ustid = $_GET['alt_ustid'];
+
 //alt kategori çek
-$altsor = $db->prepare("SELECT * FROM alt_kategori WHERE alt_ustid=:alt_ustid");
-$altsor->execute(array('alt_ustid' => $kategori_id));
-$altcek = $altsor->fetchAll(PDO::FETCH_ASSOC);
+$altsor = $db->prepare("SELECT * FROM alt_kategori WHERE alt_id=:alt_ustid");
+$altsor->execute(array('alt_ustid' => $alt_ustid));
+$altcek = $altsor->fetch(PDO::FETCH_ASSOC);
 
 //kategorilere göre videoları listeleme
-$videosor = $db->prepare("SELECT * FROM video_tbl WHERE video_kategori=:kategori_id");
-$videosor->execute(array('kategori_id' => $kategori_id));
+$videosor = $db->prepare("SELECT * FROM video_tbl WHERE video_alt_kategori=:alt_ustid");
+$videosor->execute(array('alt_ustid' => $alt_ustid));
 $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -21,16 +18,8 @@ $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
         <div class="row">
             <div class="col-sm-12 text-center">
                 <div class="search-wrapper">
-                    <h2 class="mb-3"><?= $kategoricek['kategori_ad'] ?></h2>
-                    <p class="mb-0"><?php if ($altcek) echo 'Kategoriye ait alt kategoriler' ?></p>
-                    <div class="alt-kategori my-2 <?php if (!$altcek) echo 'd-none' ?>">
-                        <nav>
-                            <?php foreach ($altcek as $alt) { ?>
-                                <a class="p-2 mx-1 my-3 btn btn-danger rounded-0" href="alt-kategori.php?alt_ustid=<?= $alt['alt_id'] ?>"><?= $alt['alt_ad'] ?></a>
-                            <?php } ?>
-                        </nav>
-                    </div>
-                    <p class="mb-0 pt-2"><?php if ($videocek) echo 'Kategoriye ait videolar aşağıda listelenmiştir.' ?></p>
+                    <h2 class="mb-3"><?= $altcek['alt_ad'] ?></h2>
+                    <p class="mb-0 pt-5"><?php if ($videocek) echo 'Kategoriye ait videolar aşağıda listelenmiştir.' ?></p>
                 </div>
             </div>
         </div>
