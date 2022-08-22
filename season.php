@@ -27,7 +27,7 @@ $videolar = $sonvideolar->fetchAll(PDO::FETCH_ASSOC);
                         <h2><?= $videocek['video_baslik'] ?></h2>
                         <span class="tag"><?= $kategoricek['kategori_ad'] ?></span>
                         <p><?= $videocek['video_aciklama'] ?></p>
-                        <?php if ($kullanicicek['kullanici_yetki'] < 2) { ?>
+                        <?php if ($kullanicicek['kullanici_yetki'] <= 2) { ?>
                             <a href="video.php?id=<?= $videocek['id'] ?>" class="btn btn-lg"><img src="images/play.png" alt="icn">Şimdi İzle</a>
                             <a href="<?= $videocek['video_documents'] ?>" download class="btn btn-lg bg-warning <?= (empty($videocek['video_documents']) ? 'd-none' : '') ?>"><i class="fa fa-download"></i> Video Dökümanlarını İndir</a>
                         <?php } else { ?>
