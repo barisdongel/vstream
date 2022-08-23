@@ -770,8 +770,9 @@ if (isset($_POST['altkategoriekle'])) {
 		$uploads_dir = 'images/kategoriler/';
 		@$tmp_name = $_FILES['alt_foto']["tmp_name"];
 		@$name = $_FILES['alt_foto']["name"];
-		$refimgyol = 'images/kategoriler/' . $name;
-		@move_uploaded_file($tmp_name, "$uploads_dir/$name");
+		$random = rand(1000, 9999);
+		$refimgyol = $uploads_dir . $random . $name;
+		@move_uploaded_file($tmp_name, "$uploads_dir/$random$name");
 	} else {
 		$refimgyol = '';
 	}
@@ -805,19 +806,24 @@ if (isset($_POST['altkategoriduzenle'])) {
 		$uploads_dir = 'images/kategoriler/';
 		@$tmp_name = $_FILES['alt_foto']["tmp_name"];
 		@$name = $_FILES['alt_foto']["name"];
-		$refimgyol = 'images/kategoriler/' . $name;
-		@move_uploaded_file($tmp_name, "$uploads_dir/$name");
+		$random = rand(1000, 9999);
+		$refimgyol = $uploads_dir . $random . $name;
+		@move_uploaded_file($tmp_name, "$uploads_dir/$random$name");
 	} else {
 		$refimgyol = $altcek['alt_foto'];
 	}
 
 	$kategoriduzenle = $db->prepare("UPDATE alt_kategori SET
 		alt_ad=:ad,
+		alt_aciklama=:aciklama,
+		alt_foto=:foto,
 		alt_ustid=:ustid
 		WHERE alt_id={$_POST['alt_id']}
 		");
 	$update = $kategoriduzenle->execute(array(
 		'ad' => $_POST['alt_ad'],
+		'aciklama' => $_POST['alt_aciklama'],
+		'foto' => $refimgyol,
 		'ustid' => $_POST['alt_ustid']
 	));
 

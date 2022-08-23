@@ -34,10 +34,10 @@ $kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC);
 						<label><i class="fa fa-list-alt"></i> Üst Kategorisi</label>
 						<select class="form-control" name="alt_ustid">
 							<?php
-							$kategoriso2 = $db->prepare("SELECT * FROM kategori_tbl");
-							$kategoriso2->execute() ?>
-							<?php while ($kategorice1 = $kategoriso2->fetch(PDO::FETCH_ASSOC)) { ?>
-								<option value="<?= $kategorice1['kategori_id'] ?>"><?= $kategorice1['kategori_ad'] ?></option>
+							$kategoriler = $db->prepare("SELECT * FROM kategori_tbl");
+							$kategoriler->execute() ?>
+							<?php while ($kategori = $kategoriler->fetch(PDO::FETCH_ASSOC)) { ?>
+								<option value="<?= $kategori['kategori_id'] ?>" <?= ($kategoricek['alt_ustid'] == $kategori['kategori_id'] ? 'selected' : '') ?>><?= $kategori['kategori_ad'] ?></option>
 							<?php } ?>
 						</select>
 					</div>
