@@ -10,10 +10,12 @@ $ayarsor->execute(array(0));
 $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
 //ayarlar son
 
+//kategoriler
 $kategorisor = $db->prepare("SELECT * FROM kategori_tbl LIMIT 6");
 $kategorisor->execute();
 $kategoricek = $kategorisor->fetchAll(PDO::FETCH_ASSOC);
 
+//videolar
 $videosor = $db->prepare("SELECT * FROM video_tbl");
 $videosor->execute();
 $videocek = $videosor->fetchAll(PDO::FETCH_ASSOC);
@@ -64,17 +66,37 @@ if (!isset($_SESSION['kullanici_mail'])) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8 navbar p-0">
-                        <a href="<?= $ayarcek['ayar_siteurl'] ?>" class="logo"><img src="<?= $ayarcek['ayar_logo'] ?>" alt="logo"></a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                            <ul class="navbar-nav nav-menu float-none text-center">
-                                <?php foreach ($kategoricek as $row) { ?>
-                                    <li class="nav-item"><a class="nav-link" href="categories.php?kategori_id=<?= $row['kategori_id'] ?>"><?= $row['kategori_ad'] ?></a></li>
-                                <?php } ?>
-                            </ul>
-                        </div>
+                        <nav class="navbar navbar-expand-lg bg-light Montserrat">
+                            <a href="<?= $ayarcek['ayar_siteurl'] ?>" class="logo"><img src="<?= $ayarcek['ayar_logo'] ?>" alt="logo"></a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                <ul class="navbar-nav fw-bold">
+                                    <?php foreach ($kategoricek as $row) { ?>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle text-dark" href="categories.php?kategori_id=<?=$row['kategori_id']?>" data-bs-toggle="dropdown">
+                                                <?= $row['kategori_ad'] ?>
+                                            </a>
+                                            <ul class="dropdown-menu p-0">
+                                                <?php
+                                                //alt kategoriler
+                                                $altkategori = $db->prepare("SELECT * FROM alt_kategori WHERE alt_ustid=:id");
+                                                $altkategori->execute(array('id' => $row['kategori_id']));
+                                                $altcek = $altkategori->fetchAll(PDO::FETCH_ASSOC);
+                                                foreach ($altcek as $alt) { ?>
+                                                    <li class="p-2 border-bottom">
+                                                        <a class="text-decoration-none" href="alt-kategori.php?alt_ustid=<?= $alt['alt_id'] ?>" style="text-transform:uppercase;">
+                                                            <?= $alt['alt_ad'] ?>
+                                                        </a>
+                                                    </li>
+                                                <?php } ?>
+                                            </ul>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        </nav>
                     </div>
                     <div class="col-lg-4">
 

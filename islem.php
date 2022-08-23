@@ -766,12 +766,25 @@ if (isset($_POST['dahasonraizle'])) {
 
 //ketegori Ekleme
 if (isset($_POST['altkategoriekle'])) {
+	if ($_FILES['alt_foto']['size'] != 0) {
+		$uploads_dir = 'images/kategoriler/';
+		@$tmp_name = $_FILES['alt_foto']["tmp_name"];
+		@$name = $_FILES['alt_foto']["name"];
+		$refimgyol = 'images/kategoriler/' . $name;
+		@move_uploaded_file($tmp_name, "$uploads_dir/$name");
+	} else {
+		$refimgyol = '';
+	}
 	$kategorikaydet = $db->prepare("INSERT INTO alt_kategori SET
 		alt_ad=:ad,
+		alt_aciklama=:aciklama,
+		alt_foto=:foto,
 		alt_ustid=:ustid
 		");
 	$insert = $kategorikaydet->execute(array(
 		'ad' => $_POST['alt_ad'],
+		'aciklama' => $_POST['alt_aciklama'],
+		'foto' => $refimgyol,
 		'ustid' => $_POST['alt_ustid']
 	));
 	if ($insert) {
@@ -783,6 +796,20 @@ if (isset($_POST['altkategoriekle'])) {
 
 //ketegori guncelleme
 if (isset($_POST['altkategoriduzenle'])) {
+
+	$altsor = $db->prepare("SELECT * FROM alt_kategori where alt_id=:alt_id");
+	$altsor->execute(array("alt_id" => $_POST['alt_id']));
+	$altcek = $altsor->fetch(PDO::FETCH_ASSOC);
+
+	if ($_FILES['alt_foto']['size'] != 0) {
+		$uploads_dir = 'images/kategoriler/';
+		@$tmp_name = $_FILES['alt_foto']["tmp_name"];
+		@$name = $_FILES['alt_foto']["name"];
+		$refimgyol = 'images/kategoriler/' . $name;
+		@move_uploaded_file($tmp_name, "$uploads_dir/$name");
+	} else {
+		$refimgyol = $altcek['alt_foto'];
+	}
 
 	$kategoriduzenle = $db->prepare("UPDATE alt_kategori SET
 		alt_ad=:ad,
@@ -805,6 +832,12 @@ if (isset($_POST['altkategoriduzenle'])) {
 
 //ketegori silme
 if ($_GET['altkategorisil'] == 'ok') {
+
+	$select = $db->prepare("SELECT * FROM alt_kategori where alt_id=:id");
+	$select->execute(array('id' => $_GET['alt_id']));
+	$bul = $select->fetch(PDO::FETCH_ASSOC);
+
+	unlink($bul['alt_foto']);
 
 	$sil = $db->prepare("DELETE FROM alt_kategori where alt_id=:alt_id");
 	$kontrol = $sil->execute(array(
