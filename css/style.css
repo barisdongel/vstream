@@ -14013,7 +14013,7 @@ body {
 .slide-wrapper .slide-one .slide-content .tag,
 .slide-wrapper .slide-one .slide-content p,
 .banner-wrapper .left-wrap a {
-    display: none;
+    display: block;
   }
 
   .owl-nav {

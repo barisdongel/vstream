@@ -65,7 +65,7 @@ if (!isset($_SESSION['kullanici_mail'])) {
         <div class="header-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-8 navbar p-0">
+                    <div class="col-lg-8 p-0">
                         <nav class="navbar navbar-expand-lg bg-light Montserrat">
                             <a href="<?= $ayarcek['ayar_siteurl'] ?>" class="logo"><img src="<?= $ayarcek['ayar_logo'] ?>" alt="logo"></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

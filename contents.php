@@ -1,3 +1,40 @@
+
+<!-- slider wrapper -->
+<div class="category-wrapper slide-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 text-left mb-4 mt-4">
+                <h2>Kategoriler</h2>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="category-slider owl-carousel owl-theme">
+                    <?php
+                    $kategorisor = $db->prepare("SELECT * FROM kategori_tbl");
+                    $kategorisor->execute();
+                    $kategoricek = $kategorisor->fetchAll(PDO::FETCH_ASSOC);
+                    $i = 1;
+                    foreach ($kategoricek as $row) {
+                    ?>
+                        <div class="owl-items">
+                            <a href="categories.php?kategori_id=<?= $row['kategori_id'] ?>" class="category-wrap" style="background-image: url(images/gb<?= $i ?>.png);"><span><?= $row['kategori_ad'] ?></span></a>
+                        </div>
+                    <?php
+                        if ($i >= 4) {
+                            $i = 0;
+                        }
+                        $i++;
+                    } ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- slider wrapper -->
+
 <!-- slider wrapper -->
 <div class="slide-wrapper">
     <div class="container-fluid">
@@ -87,42 +124,6 @@
                             </div>
                     <?php }
                     } ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- slider wrapper -->
-
-<!-- slider wrapper -->
-<div class="category-wrapper slide-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6 text-left mb-4 mt-4">
-                <h2>Kategoriler</h2>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="category-slider owl-carousel owl-theme">
-                    <?php
-                    $kategorisor = $db->prepare("SELECT * FROM kategori_tbl");
-                    $kategorisor->execute();
-                    $kategoricek = $kategorisor->fetchAll(PDO::FETCH_ASSOC);
-                    $i = 1;
-                    foreach ($kategoricek as $row) {
-                    ?>
-                        <div class="owl-items">
-                            <a href="categories.php?kategori_id=<?= $row['kategori_id'] ?>" class="category-wrap" style="background-image: url(images/gb<?= $i ?>.png);"><span><?= $row['kategori_ad'] ?></span></a>
-                        </div>
-                    <?php
-                        if ($i >= 4) {
-                            $i = 0;
-                        }
-                        $i++;
-                    } ?>
-
                 </div>
             </div>
         </div>
