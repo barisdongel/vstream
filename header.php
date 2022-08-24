@@ -10,10 +10,15 @@ $ayarsor->execute(array(0));
 $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
 //ayarlar son
 
-//kategoriler
+//kategoriler limit
 $kategorisor = $db->prepare("SELECT * FROM kategori_tbl LIMIT 6");
 $kategorisor->execute();
 $kategoricek = $kategorisor->fetchAll(PDO::FETCH_ASSOC);
+
+//kategoriler
+$tumkategorisor = $db->prepare("SELECT * FROM kategori_tbl");
+$tumkategorisor->execute();
+$tumkategoriler = $tumkategorisor->fetchAll(PDO::FETCH_ASSOC);
 
 //videolar
 $videosor = $db->prepare("SELECT * FROM video_tbl");
@@ -75,7 +80,7 @@ if (!isset($_SESSION['kullanici_mail'])) {
                                 <ul class="navbar-nav fw-bold">
                                     <?php foreach ($kategoricek as $row) { ?>
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle text-dark" href="categories.php?kategori_id=<?=$row['kategori_id']?>" data-bs-toggle="dropdown">
+                                            <a class="nav-link dropdown-toggle text-dark" href="categories.php?kategori_id=<?= $row['kategori_id'] ?>" data-bs-toggle="dropdown">
                                                 <?= $row['kategori_ad'] ?>
                                             </a>
                                             <ul class="dropdown-menu p-0">
@@ -94,6 +99,21 @@ if (!isset($_SESSION['kullanici_mail'])) {
                                             </ul>
                                         </li>
                                     <?php } ?>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-dark" href="" data-bs-toggle="dropdown">
+                                            Tüm Kategoriler
+                                        </a>
+                                        <ul class="dropdown-menu p-0">
+                                            <?php
+                                            foreach ($tumkategoriler as $row) { ?>
+                                                <li class="p-2 border-bottom">
+                                                    <a class="text-decoration-none" href="categories.php?kategori_id=<?= $row['kategori_id'] ?>" style="text-transform:uppercase;">
+                                                        <?= $row['kategori_ad'] ?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </div>
                         </nav>
